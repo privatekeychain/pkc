@@ -25,6 +25,13 @@ std::string CBlock::ToString() const
         hashMerkleRoot.ToString(),
         nTime, nBits, nNonce,
         vtx.size());
+
+    s << "cuckooNonces=";
+
+    for (size_t i = 0; i < cuckooNonces.size(); ++i) {
+        s << strprintf("%u", cuckooNonces[i]);
+    }
+
     for (const auto& tx : vtx) {
         s << "  " << tx->ToString() << "\n";
     }

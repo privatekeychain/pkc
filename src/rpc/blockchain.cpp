@@ -143,6 +143,11 @@ UniValue blockToJSON(const CBlock& block, const CBlockIndex* blockindex, bool tx
     result.pushKV("time", block.GetBlockTime());
     result.pushKV("mediantime", (int64_t)blockindex->GetMedianTimePast());
     result.pushKV("nonce", (uint64_t)block.nNonce);
+    UniValue cuckooNonces(UniValue::VARR);
+    for (size_t i = 0; i < block.cuckooNonces.size(); ++i) {
+        cuckooNonces.push_back((uint64_t)block.cuckooNonces[i]);
+    }
+
     result.pushKV("bits", strprintf("%08x", block.nBits));
     result.pushKV("difficulty", GetDifficulty(blockindex));
     result.pushKV("chainwork", blockindex->nChainWork.GetHex());

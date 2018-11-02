@@ -6,9 +6,15 @@
 #ifndef BITCOIN_PRIMITIVES_BLOCK_H
 #define BITCOIN_PRIMITIVES_BLOCK_H
 
+
+#include <vector>
+
+#include <cuckoo/src/cuckoo/cuckoo.h>
+
 #include <primitives/transaction.h>
 #include <serialize.h>
 #include <uint256.h>
+
 
 /** Nodes collect new transactions into a block, hash them into a hash tree,
  * and scan through nonce values to make the block's hash satisfy proof-of-work
@@ -28,6 +34,8 @@ public:
     uint32_t nBits;
     uint32_t nNonce;
 
+    std::vector<word_t> cuckooNonces;
+
     CBlockHeader()
     {
         SetNull();
@@ -43,6 +51,10 @@ public:
         READWRITE(nTime);
         READWRITE(nBits);
         READWRITE(nNonce);
+
+        for (size_t i = 0; i < cuckooNonces.size(); ++i) {
+            READWRITE(cuckooNonces[i]);
+        }
     }
 
     void SetNull()
@@ -53,6 +65,8 @@ public:
         nTime = 0;
         nBits = 0;
         nNonce = 0;
+
+        cuckooNonces.clear();
     }
 
     bool IsNull() const
@@ -113,6 +127,9 @@ public:
         block.nTime          = nTime;
         block.nBits          = nBits;
         block.nNonce         = nNonce;
+
+        block.cuckooNonces = cuckooNonces;
+
         return block;
     }
 
