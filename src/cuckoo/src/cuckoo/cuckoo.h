@@ -1,3 +1,5 @@
+#pragma once
+
 // Cuckoo Cycle, a memory-hard proof-of-work
 // Copyright (c) 2013-2017 John Tromp
 

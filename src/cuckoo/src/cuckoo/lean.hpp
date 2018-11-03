@@ -1,3 +1,5 @@
+#pragma once
+
 // Cuckoo Cycle, a memory-hard proof-of-work
 // Copyright (c) 2013-2019 John Tromp
 // The edge-trimming memory optimization is due to Dave Andersen
@@ -241,7 +243,7 @@ public:
   void setheadernonce(char* headernonce, const u32 len, const u32 nce) {
     nonce = nce;
     ((u32 *)headernonce)[len/sizeof(u32)-1] = htole32(nonce); // place nonce at end
-    setheader(headernonce, len, &sip_keys);
+    cuckooSetheader(headernonce, len, &sip_keys);
     alive->clear(); // set all edges to be alive
     nsols = 0;
   }
