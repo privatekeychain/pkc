@@ -22,7 +22,7 @@ typedef struct {
 #define U8TO64_LE(p) ((p))
 
 // set doubled (128->256 bits) siphash keys from 32 byte char array
-void setkeys(siphash_keys *keys, const char *keybuf) {
+void cuckooSetkeys(siphash_keys *keys, const char *keybuf) {
   keys->k0 = htole64(((uint64_t *)keybuf)[0]);
   keys->k1 = htole64(((uint64_t *)keybuf)[1]);
   keys->k2 = htole64(((uint64_t *)keybuf)[2]);
