@@ -147,6 +147,7 @@ UniValue blockToJSON(const CBlock& block, const CBlockIndex* blockindex, bool tx
     for (size_t i = 0; i < block.cuckooNonces.size(); ++i) {
         cuckooNonces.push_back((uint64_t)block.cuckooNonces[i]);
     }
+    result.pushKV("cuckooNonces", cuckooNonces);
 
     result.pushKV("bits", strprintf("%08x", block.nBits));
     result.pushKV("difficulty", GetDifficulty(blockindex));
