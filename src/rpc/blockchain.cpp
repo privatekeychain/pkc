@@ -97,7 +97,7 @@ UniValue blockheaderToJSON(const CBlockIndex* blockindex)
     result.pushKV("time", (int64_t)blockindex->nTime);
     result.pushKV("mediantime", (int64_t)blockindex->GetMedianTimePast());
     result.pushKV("nonce", (uint64_t)blockindex->nNonce);
-
+    result.pushKV("cuckooNonce", (uint64_t)blockindex->cuckooNonce);
     UniValue cuckooNonces(UniValue::VARR);
     for (size_t i = 0; i < blockindex->cuckooNonces.size(); ++i) {
         cuckooNonces.push_back((uint64_t)blockindex->cuckooNonces[i]);

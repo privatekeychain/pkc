@@ -242,6 +242,7 @@ public:
         nTime          = 0;
         nBits          = 0;
         nNonce         = 0;
+        cuckooNonce    = 0;
         cuckooNonces.clear();
     }
 
@@ -413,6 +414,7 @@ public:
         READWRITE(nTime);
         READWRITE(nBits);
         READWRITE(nNonce);
+        READWRITE(cuckooNonce);
         READWRITE(cuckooNonces);
     }
 
