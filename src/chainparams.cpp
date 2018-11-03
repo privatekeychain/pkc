@@ -24,7 +24,7 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
     txNew.vout[0].nValue = genesisReward;
     txNew.vout[0].scriptPubKey = genesisOutputScript;
 
-    // PKCTODO 创世区块增加cuckooNonces
+    // PKCTODO 创世区块增加cuckooNonces cuckooNonce
     CBlock genesis;
     genesis.nTime    = nTime;
     genesis.nBits    = nBits;

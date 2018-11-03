@@ -34,6 +34,7 @@ public:
     uint32_t nBits;
     uint32_t nNonce;
 
+    uint32_t cuckooNonce;
     std::vector<word_t> cuckooNonces;
 
     CBlockHeader()
@@ -52,6 +53,7 @@ public:
         READWRITE(nBits);
         READWRITE(nNonce);
 
+        READWRITE(cuckooNonce);
         for (size_t i = 0; i < cuckooNonces.size(); ++i) {
             READWRITE(cuckooNonces[i]);
         }
@@ -66,6 +68,7 @@ public:
         nBits = 0;
         nNonce = 0;
 
+        cuckooNonce = 0;
         cuckooNonces.clear();
     }
 
@@ -128,6 +131,7 @@ public:
         block.nBits          = nBits;
         block.nNonce         = nNonce;
 
+        block.cuckooNonce = cuckooNonce;
         block.cuckooNonces = cuckooNonces;
 
         return block;

@@ -212,6 +212,7 @@ public:
     uint32_t nTime;
     uint32_t nBits;
     uint32_t nNonce;
+    uint32_t cuckooNonce;
     std::vector<word_t> cuckooNonces;
 
     //! (memory only) Sequential id assigned to distinguish order in which blocks are received.
@@ -258,7 +259,7 @@ public:
         nTime          = block.nTime;
         nBits          = block.nBits;
         nNonce         = block.nNonce;
-
+        cuckooNonce    = block.cuckooNonce;
         cuckooNonces   = block.cuckooNonces;
     }
 
@@ -291,6 +292,7 @@ public:
         block.nBits          = nBits;
         block.nNonce         = nNonce;
 
+        block.cuckooNonce    = cuckooNonce;
         block.cuckooNonces   = cuckooNonces;
         return block;
     }
@@ -423,7 +425,7 @@ public:
         block.nTime           = nTime;
         block.nBits           = nBits;
         block.nNonce          = nNonce;
-
+        block.cuckooNonce  = cuckooNonce;
         block.cuckooNonces = cuckooNonces;
 
         return block.GetHash();
