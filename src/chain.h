@@ -241,6 +241,7 @@ public:
         nTime          = 0;
         nBits          = 0;
         nNonce         = 0;
+        cuckooNonces.clear();
     }
 
     CBlockIndex()
@@ -410,6 +411,7 @@ public:
         READWRITE(nTime);
         READWRITE(nBits);
         READWRITE(nNonce);
+        READWRITE(cuckooNonces);
     }
 
     uint256 GetBlockHash() const
