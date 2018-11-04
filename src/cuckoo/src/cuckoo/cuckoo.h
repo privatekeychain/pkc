@@ -13,6 +13,8 @@
 #include <stdio.h>
 #endif
 
+#define EDGEBITS 19
+
 // proof-of-work parameters
 #ifndef EDGEBITS
 // the main parameter is the 2-log of the graph size,
