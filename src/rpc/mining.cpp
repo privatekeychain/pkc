@@ -126,7 +126,17 @@ UniValue generateBlocks(std::shared_ptr<CReserveScript> coinbaseScript, int nGen
             LOCK(cs_main);
             IncrementExtraNonce(pblock, chainActive.Tip(), nExtraNonce);
         }
-// PKCTODO CheckProofOfWork
+
+        while(nMaxTries > 0 && pblock->nNonce < nInnerLoopCount && !CheckProofOfWorkNew(*pblock))
+        {
+            ++pblock->nNonce;
+            --nMaxTries;
+
+            pblock->cuckooNonces.clear();
+            ++pblock->cuckooNonce;
+            FindNewCycle(pblock);
+        }
+
 //        while (nMaxTries > 0 && pblock->nNonce < nInnerLoopCount && !CheckProofOfWork(pblock->GetHash(), pblock->nBits, Params().GetConsensus())) {
 //            ++pblock->nNonce;
 //            --nMaxTries;

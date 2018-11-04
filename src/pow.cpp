@@ -9,6 +9,11 @@
 #include <chain.h>
 #include <primitives/block.h>
 #include <uint256.h>
+#include <streams.h>
+#include <hash.h>
+#include <version.h>
+
+#include <cuckoo/src/cuckoo/lean.hpp>
 
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params)
 {
@@ -89,3 +94,75 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nF
 //
 //    return true;
 //}
+
+std::string GetHeaderHashFromBlock(const CBlockHeader &blockHeader)
+{
+    std::vector<unsigned char> serializedHeader;
+    CVectorWriter(SER_NETWORK, INIT_PROTO_VERSION, serializedHeader, 0, blockHeader);
+    serializedHeader.resize(84);
+
+    unsigned char hash[32];
+    CSHA256().Write(serializedHeader.data(), 84).Finalize(hash);
+    return std::string((const char*)hash, 32);
+}
+
+std::string PlaceNonceAtEndOfHeaderHash(const std::string& headerHash, uint32_t cuckooNonce)
+{
+    size_t palceIdx = headerHash.length() / sizeof(uint32_t) - 1;
+
+    if ((palceIdx + sizeof(uint32_t)) > headerHash.length()) {
+        throw std::runtime_error("headerHash palceIdx err");
+    }
+
+    std::string tmp(headerHash);
+    ((uint32_t*)tmp.data())[palceIdx] = cuckooNonce;
+    return tmp;
+}
+
+bool CheckProofOfWorkCuckooCycleImpl(const std::string &headerHashWithCuckooNonce,
+                                     const std::vector<word_t> &cuckooNonces)
+{
+    siphash_keys keys;
+    cuckooSetheader(headerHashWithCuckooNonce.c_str(), headerHashWithCuckooNonce.size(), &keys);
+    if (cuckooNonces.size() != PROOFSIZE) {
+        return false;
+    }
+    word_t cuckooNoncesTmp[PROOFSIZE];
+    for (size_t i = 0; i < cuckooNonces.size(); ++i) {
+        cuckooNoncesTmp[i] = cuckooNonces[i];
+    }
+    int pow_rc = cuckooVerify(cuckooNoncesTmp, &keys);
+    return pow_rc == POW_OK;
+}
+
+bool CheckProofOfWorkNew(const CBlockHeader &blockHeader)
+{
+    std::string headerHash = GetHeaderHashFromBlock(blockHeader);
+    std::string headerHashWithCuckooNonce = PlaceNonceAtEndOfHeaderHash(headerHash, blockHeader.cuckooNonce);
+    return CheckProofOfWorkCuckooCycleImpl(headerHashWithCuckooNonce, blockHeader.cuckooNonces);
+}
+
+void FindNewCycle(CBlockHeader *blockHeader)
+{
+    const int ntrims = 2 + (PART_BITS + 3) * (PART_BITS + 4);
+    const int maxsols = 1;
+
+    std::string header = GetHeaderHashFromBlock(*blockHeader);
+
+    cuckoo_ctx ctx(1, ntrims, maxsols);
+    ctx.setheadernonce((char*)header.c_str(), header.size(), blockHeader->cuckooNonce);
+    ctx.barry.clear();
+
+    thread_ctx thread;
+    thread.id = 0;
+    thread.ctx = &ctx;
+
+    (*worker)((void *) &thread);
+
+    if (ctx.nsols == 1) {
+        for (int i = 0; i < PROOFSIZE; ++i)
+        {
+            blockHeader->cuckooNonces.push_back(ctx.sols[0][i]);
+        }
+    }
+}
