@@ -309,7 +309,20 @@ crypto_libbitcoin_crypto_base_a_SOURCES = \
   crypto/sha256.cpp \
   crypto/sha256.h \
   crypto/sha512.cpp \
-  crypto/sha512.h
+  crypto/sha512.h \
+  cuckoo/src/crypto/blake2b-ref.cpp \
+  cuckoo/src/crypto/siphash.cpp \
+  cuckoo/src/crypto/siphashxN.cpp \
+  cuckoo/src/cuckoo/cuckoo.cpp \
+  cuckoo/src/cuckoo/lean.cpp \
+  cuckoo/src/crypto/blake2.h \
+  cuckoo/src/crypto/blake2-impl.h \
+  cuckoo/src/crypto/siphash.h \
+  cuckoo/src/crypto/siphashxN.h \
+  cuckoo/src/cuckoo/cuckoo.h \
+  cuckoo/src/cuckoo/lean.hpp \
+  cuckoo/src/cuckoo/barrier.hpp
+
 
 if USE_ASM
 crypto_libbitcoin_crypto_base_a_SOURCES += crypto/sha256_sse4.cpp

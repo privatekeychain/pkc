@@ -1,4 +1,5 @@
-#pragma once
+#ifndef INCLUDE_CUCKOO_H
+#define INCLUDE_CUCKOO_H
 
 // Cuckoo Cycle, a memory-hard proof-of-work
 // Copyright (c) 2013-2017 John Tromp
@@ -55,3 +56,5 @@ void cuckooSetheader(const char *header, const u32 headerlen, siphash_keys *keys
 
 // edge endpoint in cuckoo graph with partition bit
 word_t sipnode_(siphash_keys *keys, word_t edge, u32 uorv);
+
+#endif // #ifndef INCLUDE_CUCKOO_H

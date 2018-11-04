@@ -1,4 +1,6 @@
-#pragma once
+#ifndef INCLUDE_BARRIER_H
+#define INCLUDE_BARRIER_H
+
 #include <pthread.h>
 #include <errno.h>
 
@@ -58,3 +60,5 @@ public:
       pthread_exit(NULL);
   }
 };
+
+#endif // #ifndef INCLUDE_BARRIER_H

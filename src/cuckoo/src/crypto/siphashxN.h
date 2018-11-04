@@ -1,6 +1,8 @@
 #ifndef INCLUDE_SIPHASHXN_H
 #define INCLUDE_SIPHASHXN_H
 
+#include "siphash.h"
+
 #ifdef __AVX2__
 
 #define ADD(a, b) _mm256_add_epi64(a, b)
