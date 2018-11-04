@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "lean.hpp"
 
 void cuckoo_ctx::count_node_deg(const u32 id, const u32 uorv, const u32 part) {
@@ -64,10 +65,13 @@ u32 cuckooPath(cuckoo_hash &cuckoo, word_t u, word_t *us) {
     for (nu = 0; u; u = cuckoo[u]) {
         if (nu >= MAXPATHLEN) {
             while (nu-- && us[nu] != u) ;
-            if (!~nu)
-                printf("maximum path length exceeded\n");
-            else printf("illegal %4d-cycle\n", MAXPATHLEN-nu);
-            pthread_exit(NULL);
+//            if (!~nu)
+//                printf("maximum path length exceeded\n");
+//            else printf("illegal %4d-cycle\n", MAXPATHLEN-nu);
+//            pthread_exit(NULL);
+            if (!~nu) {
+                throw std::runtime_error("cuckooPath err");
+            }
         }
         us[nu++] = u;
     }
@@ -102,8 +106,9 @@ void *worker(void *vp) {
         u32 load = (u32)(100LL * alive->count() / CUCKOO_SIZE);
         printf("nonce %d: %d trims completed  final load %d%%\n", ctx->nonce, ctx->ntrims, load);
         if (load >= 90) {
-            printf("overloaded! exiting...");
-            pthread_exit(NULL);
+//            printf("overloaded! exiting...");
+//            pthread_exit(NULL);
+            throw std::runtime_error("overloaded! exiting...");
         }
         ctx->cuckoo = new cuckoo_hash(ctx->nonleaf->bits);
     }
@@ -146,6 +151,6 @@ void *worker(void *vp) {
             if (ffs & 64) break; // can't shift by 64
         }
     }
-    pthread_exit(NULL);
+    // pthread_exit(NULL);
     return 0;
 }
