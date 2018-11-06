@@ -142,7 +142,7 @@ bool CheckProofOfWorkNew(const CBlockHeader &blockHeader)
     return CheckProofOfWorkCuckooCycleImpl(headerHashWithCuckooNonce, blockHeader.cuckooNonces);
 }
 
-void FindNewCycle(CBlockHeader *blockHeader)
+bool FindNewCycle(CBlockHeader *blockHeader)
 {
     const int ntrims = 2 + (PART_BITS + 3) * (PART_BITS + 4);
     const int maxsols = 1;

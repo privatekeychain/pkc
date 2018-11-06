@@ -36,7 +36,7 @@ bool CheckProofOfWorkCuckooCycleImpl(const std::string &headerHashWithCuckooNonc
 
 bool CheckProofOfWorkNew(const CBlockHeader &blockHeader);
 
-void FindNewCycle(CBlockHeader *blockHeader);
+bool FindNewCycle(CBlockHeader *blockHeader);
 
 
 #endif // BITCOIN_POW_H
