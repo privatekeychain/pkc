@@ -164,5 +164,8 @@ bool FindNewCycle(CBlockHeader *blockHeader)
         {
             blockHeader->cuckooNonces.push_back(ctx.sols[0][i]);
         }
+        return true;
     }
+
+    return false;
 }
