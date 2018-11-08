@@ -83,10 +83,14 @@ void *worker(void *vp) {
     cuckoo_ctx *ctx = tp->ctx;
 
     shrinkingset *alive = ctx->alive;
-    if (tp->id == 0)
-        printf("initial size %d\n", NEDGES);
+    if (tp->id == 0) {
+        // printf("initial size %d\n", NEDGES);
+    }
     for (u32 round=0; round < ctx->ntrims; round++) {
-        if (tp->id == 0) printf("round %2d partition sizes", round);
+        if (tp->id == 0) {
+            // printf("round %2d partition sizes", round);
+        }
+
         for (u32 part = 0; part <= PART_MASK; part++) {
             if (tp->id == 0)
                 ctx->nonleaf->clear(); // clear all counts
@@ -96,15 +100,17 @@ void *worker(void *vp) {
             ctx->kill_leaf_edges(tp->id,round&1,part);
             ctx->barrier();
             if (tp->id == 0) {
-                u32 size = alive->count();
-                printf(" %c%d %d", "UV"[round&1], part, size);
+                // u32 size = alive->count();
+                // printf(" %c%d %d", "UV"[round&1], part, size);
             }
         }
-        if (tp->id == 0) printf("\n");
+        if (tp->id == 0) {
+            // printf("\n");
+        }
     }
     if (tp->id == 0) {
         u32 load = (u32)(100LL * alive->count() / CUCKOO_SIZE);
-        printf("nonce %d: %d trims completed  final load %d%%\n", ctx->nonce, ctx->ntrims, load);
+        // printf("nonce %d: %d trims completed  final load %d%%\n", ctx->nonce, ctx->ntrims, load);
         if (load >= 90) {
 //            printf("overloaded! exiting...");
 //            pthread_exit(NULL);
@@ -135,7 +141,7 @@ void *worker(void *vp) {
                     u32 min = nu < nv ? nu : nv;
                     for (nu -= min, nv -= min; us[nu] != vs[nv]; nu++, nv++) ;
                     u32 len = nu + nv + 1;
-                    printf("%4d-cycle found at %d:%d%%\n", len, tp->id, (u32)(nonce*100LL/NEDGES));
+                    // printf("%4d-cycle found at %d:%d%%\n", len, tp->id, (u32)(nonce*100LL/NEDGES));
                     if (len == PROOFSIZE && ctx->nsols < ctx->maxsols)
                         ctx->solution(us, nu, vs, nv);
                 } else if (nu < nv) {
