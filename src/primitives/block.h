@@ -54,9 +54,7 @@ public:
         READWRITE(nNonce);
 
         READWRITE(cuckooNonce);
-        for (size_t i = 0; i < cuckooNonces.size(); ++i) {
-            READWRITE(cuckooNonces[i]);
-        }
+        READWRITE(cuckooNonces);
     }
 
     void SetNull()
