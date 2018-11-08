@@ -14,7 +14,15 @@
 
 #include <chainparamsseeds.h>
 
-static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesisOutputScript, uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
+#include <pow.h>
+
+#include <vector>
+
+
+
+
+static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesisOutputScript, uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward,
+                                 uint32_t cuckooNonce, const std::vector<word_t>& cuckooNonces)
 {
     CMutableTransaction txNew;
     txNew.nVersion = 1;
@@ -24,7 +32,6 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
     txNew.vout[0].nValue = genesisReward;
     txNew.vout[0].scriptPubKey = genesisOutputScript;
 
-    // PKCTODO 创世区块增加cuckooNonces cuckooNonce
     CBlock genesis;
     genesis.nTime    = nTime;
     genesis.nBits    = nBits;
@@ -33,6 +40,10 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
     genesis.vtx.push_back(MakeTransactionRef(std::move(txNew)));
     genesis.hashPrevBlock.SetNull();
     genesis.hashMerkleRoot = BlockMerkleRoot(genesis);
+
+    genesis.cuckooNonce = cuckooNonce;
+    genesis.cuckooNonces = cuckooNonces;
+
     return genesis;
 }
 
@@ -47,11 +58,74 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
  *     CTxOut(nValue=50.00000000, scriptPubKey=0x5F1DF16B2B704C8A578D0B)
  *   vMerkleTree: 4a5e1e
  */
-static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
+static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward,
+                                 uint32_t cuckooNonce, const std::vector<word_t>& cuckooNonces)
 {
     const char* pszTimestamp = "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks";
     const CScript genesisOutputScript = CScript() << ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f") << OP_CHECKSIG;
-    return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward);
+    return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward,
+                              cuckooNonce, cuckooNonces);
+}
+
+static void PrintGenesisBlockProof(uint32_t nNonceIgnore, uint32_t nBitsIgnore, int32_t nVersionUse, const CAmount& genesisRewardUse) {
+    bool finded = false;
+
+    CBlock genesis;
+
+    while(!finded) {
+        uint32_t nTimeTmp = static_cast<uint32_t>(time(nullptr));
+        uint32_t cuckooNonceTmp = 0;
+
+        std::vector<word_t> cuckooNoncesTmp;
+        genesis = CreateGenesisBlock(nTimeTmp, nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse,
+                                     cuckooNonceTmp, cuckooNoncesTmp);
+
+        const int nInnerLoopCount = 0x10000;
+
+        for ( ; genesis.cuckooNonce < nInnerLoopCount; )
+        {
+            if (FindNewCycle(&genesis) && CheckProofOfWorkNew(genesis))
+            {
+                break;
+            }
+            else
+            {
+                genesis.cuckooNonces.clear();
+                ++genesis.cuckooNonce;
+            }
+        }
+
+        if (genesis.cuckooNonce == nInnerLoopCount)
+        {
+            continue;
+        }
+
+        finded = true;
+    }
+
+    // nTime
+    printf("const uint32_t nTimeGenesis = ");
+    printf("%d;\n", genesis.nTime);
+
+    // cuckooNonce
+    printf("const uint32_t cuckooNonceGenesis = ");
+    printf("%d;\n", genesis.cuckooNonce);
+
+    // cuckooNonces
+    printf("const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {");
+    for (size_t i = 0; i < genesis.cuckooNonces.size(); ++i)
+    {
+        printf("%d", genesis.cuckooNonces[i]);
+        if (i != genesis.cuckooNonces.size() - 1) {
+            printf(", ");
+        }
+    }
+    printf("};");
+    printf("\n");
+
+    // hashGenesisBlock
+    printf("// consensus.hashGenesisBlock == ");
+    printf("0x%s\n", genesis.GetHash().GetHex().c_str());
 }
 
 void CChainParams::UpdateVersionBitsParameters(Consensus::DeploymentPos d, int64_t nStartTime, int64_t nTimeout)
@@ -120,11 +194,23 @@ public:
         nDefaultPort = 8333;
         nPruneAfterHeight = 100000;
 
-        genesis = CreateGenesisBlock(1231006505, 2083236893, 0x1d00ffff, 1, 50 * COIN);
+
+        const uint32_t nNonceIgnore = 2083236893;
+        const uint32_t nBitsIgnore = 0x1d00ffff;
+        const int32_t nVersionUse = 1;
+        const CAmount genesisRewardUse = 50 * COIN;
+
+        // PrintGenesisBlockProof(nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse);
+
+        const uint32_t nTimeGenesis = 1541666438;
+        const uint32_t cuckooNonceGenesis = 20;
+        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {5336, 39666, 80883, 109242, 110580, 119448, 121295, 143084, 143343, 145207, 158281, 158923, 159918, 175732, 212210, 226310, 237496, 238530, 239492, 279037, 283237, 284514, 287262, 305665, 308027, 321647, 323335, 329664, 338113, 389961, 413147, 422486, 443477, 447441, 452899, 456881, 464559, 473571, 502886, 506639, 514310, 519164};
+
+        genesis = CreateGenesisBlock(nTimeGenesis, nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse, cuckooNonceGenesis, cuckooNoncesGenesis);
         consensus.hashGenesisBlock = genesis.GetHash();
-        // PKCTODO CMainParams 创世区块的 1. 区块hash值验证 2. merkleRoot树根hash值验证
-        //assert(consensus.hashGenesisBlock == uint256S("0x000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"));
-        //assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
+
+        assert(consensus.hashGenesisBlock == uint256S("0xd5a741f2099658985cd698d665a333ca684cb86349c3d766de018db04eb34018"));
+        assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
 
         // Note that of those which support the service bits prefix, most only support a subset of
         // possible options.
@@ -230,12 +316,22 @@ public:
         nDefaultPort = 18333;
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1296688602, 414098458, 0x1d00ffff, 1, 50 * COIN);
+        const uint32_t nNonceIgnore = 414098458;
+        const uint32_t nBitsIgnore = 0x1d00ffff;
+        const int32_t nVersionUse = 1;
+        const CAmount genesisRewardUse = 50 * COIN;
+
+        // PrintGenesisBlockProof(nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse);
+
+        const uint32_t nTimeGenesis = 1541670041;
+        const uint32_t cuckooNonceGenesis = 63;
+        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {11008, 15884, 23751, 31388, 38716, 52099, 54749, 75840, 85416, 100532, 113098, 128944, 160285, 163887, 182182, 219858, 222493, 227276, 230670, 231622, 247978, 250758, 295744, 337744, 359735, 373457, 376438, 391490, 394815, 406222, 413023, 417278, 417821, 429456, 433730, 446387, 464946, 468692, 471698, 473970, 493252, 514981};
+
+        genesis = CreateGenesisBlock(nTimeGenesis, nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse, cuckooNonceGenesis, cuckooNoncesGenesis);
         consensus.hashGenesisBlock = genesis.GetHash();
 
-        // PKCTODO CTestNetParams 创世区块的 1. 区块hash值验证 2. merkleRoot树根hash值验证
-        //assert(consensus.hashGenesisBlock == uint256S("0x000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943"));
-        //assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
+        assert(consensus.hashGenesisBlock == uint256S("0x93af4843e53d92d8f497f2d95e20a39a166073c69b5107d97dc31d032a991cc7"));
+        assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -321,12 +417,23 @@ public:
         nDefaultPort = 18444;
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1296688602, 2, 0x207fffff, 1, 50 * COIN);
+
+        const uint32_t nNonceIgnore = 2;
+        const uint32_t nBitsIgnore = 0x207fffff;
+        const int32_t nVersionUse = 1;
+        const CAmount genesisRewardUse = 50 * COIN;
+
+        //PrintGenesisBlockProof(nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse);
+
+        const uint32_t nTimeGenesis = 1541670258;
+        const uint32_t cuckooNonceGenesis = 53;
+        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {1848, 34260, 44147, 51890, 56872, 73683, 76361, 83578, 86891, 108464, 109498, 110839, 115312, 117090, 125173, 129060, 197372, 200234, 208603, 222368, 238390, 240078, 241069, 248331, 278223, 287464, 291545, 294232, 294283, 312472, 344751, 351642, 387277, 388423, 422199, 440162, 447164, 450434, 455702, 480062, 491974, 523126};
+
+        genesis = CreateGenesisBlock(nTimeGenesis, nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse, cuckooNonceGenesis, cuckooNoncesGenesis);
         consensus.hashGenesisBlock = genesis.GetHash();
 
-        // PKCTODO CRegTestParams 创世区块的 1. 区块hash值验证 2. merkleRoot树根hash值验证
-        //assert(consensus.hashGenesisBlock == uint256S("0x0f9188f13cb7b2c71f2a335e3a4fc328bf5beb436012afca590b1a11466e2206"));
-        //assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
+        assert(consensus.hashGenesisBlock == uint256S("0x9d32cce65f8e05637aa890d33890a964284bfec46129b8634ab0ee430f83a0cc"));
+        assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.
