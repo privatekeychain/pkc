@@ -73,6 +73,7 @@ u32 cuckooPath(cuckoo_hash &cuckoo, word_t u, word_t *us, bool *success) {
             if (!~nu) {
                 //throw std::runtime_error("cuckooPath err");
                 *success = false;
+                return 0;
             }
         }
         us[nu++] = u;
