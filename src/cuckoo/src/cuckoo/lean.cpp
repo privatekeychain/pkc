@@ -143,8 +143,11 @@ void *worker(void *vp) {
                 bool success = false;
 
                 u32 nu = cuckooPath(cuckoo, u0, us, &success);
-                u32 nv = cuckooPath(cuckoo, v0, vs, &success);
+                if (!success) {
+                    return 0;
+                }
 
+                u32 nv = cuckooPath(cuckoo, v0, vs, &success);
                 if (!success) {
                     return 0;
                 }
