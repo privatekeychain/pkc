@@ -60,7 +60,8 @@ void cuckoo_ctx::kill_leaf_edges(const u32 id, const u32 uorv, const u32 part) {
     kill(hashes+nnsip, indices+nnsip, NPREFETCH-nnsip, part, id);
 }
 
-u32 cuckooPath(cuckoo_hash &cuckoo, word_t u, word_t *us) {
+
+u32 cuckooPath(cuckoo_hash &cuckoo, word_t u, word_t *us, bool *success) {
     u32 nu;
     for (nu = 0; u; u = cuckoo[u]) {
         if (nu >= MAXPATHLEN) {
@@ -70,11 +71,13 @@ u32 cuckooPath(cuckoo_hash &cuckoo, word_t u, word_t *us) {
 //            else printf("illegal %4d-cycle\n", MAXPATHLEN-nu);
 //            pthread_exit(NULL);
             if (!~nu) {
-                throw std::runtime_error("cuckooPath err");
+                //throw std::runtime_error("cuckooPath err");
+                *success = false;
             }
         }
         us[nu++] = u;
     }
+    *success = true;
     return nu-1;
 }
 
@@ -136,7 +139,16 @@ void *worker(void *vp) {
             nonce += ffs; alive64 >>= ffs;
             word_t u0=sipnode_(&ctx->sip_keys, nonce, 0), v0=sipnode_(&ctx->sip_keys, nonce, 1);
             if (u0) {// ignore vertex 0 so it can be used as nil for cuckoo[]
-                u32 nu = cuckooPath(cuckoo, u0, us), nv = cuckooPath(cuckoo, v0, vs);
+
+                bool success = false;
+
+                u32 nu = cuckooPath(cuckoo, u0, us, &success);
+                u32 nv = cuckooPath(cuckoo, v0, vs, &success);
+
+                if (!success) {
+                    return 0;
+                }
+
                 if (us[nu] == vs[nv]) {
                     u32 min = nu < nv ? nu : nv;
                     for (nu -= min, nv -= min; us[nu] != vs[nv]; nu++, nv++) ;

@@ -338,7 +338,7 @@ typedef struct {
   cuckoo_ctx *ctx;
 } thread_ctx;
 
-u32 cuckooPath(cuckoo_hash &cuckoo, word_t u, word_t *us);
+u32 cuckooPath(cuckoo_hash &cuckoo, word_t u, word_t *us, bool *success);
 
 void *worker(void *vp);
 
