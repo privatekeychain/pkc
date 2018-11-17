@@ -177,7 +177,8 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1510704000; // November 15th, 2017.
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000028822fef1c230963535a90d");
+//        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000028822fef1c230963535a90d");
+        consensus.nMinimumChainWork = uint256S("0x00");
 
         // By default assume that the signatures in ancestors of this block are valid.
         consensus.defaultAssumeValid = uint256S("0x0000000000000000002e63058c023a9a1de233554f28c7b21380b6c9003f36a8"); //534292
@@ -200,16 +201,16 @@ public:
         const int32_t nVersionUse = 1;
         const CAmount genesisRewardUse = 50 * COIN;
 
-        // PrintGenesisBlockProof(nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse);
+//        PrintGenesisBlockProof(nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse);
 
-        const uint32_t nTimeGenesis = 1541674129;
-        const uint32_t cuckooNonceGenesis = 83;
-        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {6287, 26275, 29109, 29625, 34843, 35069, 37910, 70524, 74787, 79379, 103653, 117203, 166930, 179586, 190435, 191211, 205589, 238202, 270561, 275434, 290373, 291777, 297727, 306607, 328828, 375632, 381746, 382157, 384516, 389667, 393316, 393872, 403890, 414138, 432782, 443419, 443992, 448223, 491044, 493523, 497130, 502381};
+        const uint32_t nTimeGenesis = 1542427810;
+        const uint32_t cuckooNonceGenesis = 2;
+        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {3702, 17289, 17477, 30402};
 
         genesis = CreateGenesisBlock(nTimeGenesis, nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse, cuckooNonceGenesis, cuckooNoncesGenesis);
         consensus.hashGenesisBlock = genesis.GetHash();
 
-        assert(consensus.hashGenesisBlock == uint256S("0x7d6479c307c54e874e602131dea566fadf88c26d5ee07591963ec246fe61bec4"));
+        assert(consensus.hashGenesisBlock == uint256S("0x44a788e839354a908787b9e20159d5c11e5ac4ee6b90f1c5f6c4c360d0333bd7"));
         assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
 
         // Note that of those which support the service bits prefix, most only support a subset of
@@ -217,13 +218,13 @@ public:
         // This is fine at runtime as we'll fall back to using them as a oneshot if they don't support the
         // service bits we want, but we should get them updated to support all service bits wanted by any
         // release ASAP to avoid it where possible.
-        vSeeds.emplace_back("seed.bitcoin.sipa.be"); // Pieter Wuille, only supports x1, x5, x9, and xd
-        vSeeds.emplace_back("dnsseed.bluematt.me"); // Matt Corallo, only supports x9
-        vSeeds.emplace_back("dnsseed.bitcoin.dashjr.org"); // Luke Dashjr
-        vSeeds.emplace_back("seed.bitcoinstats.com"); // Christian Decker, supports x1 - xf
-        vSeeds.emplace_back("seed.bitcoin.jonasschnelli.ch"); // Jonas Schnelli, only supports x1, x5, x9, and xd
-        vSeeds.emplace_back("seed.btc.petertodd.org"); // Peter Todd, only supports x1, x5, x9, and xd
-        vSeeds.emplace_back("seed.bitcoin.sprovoost.nl"); // Sjors Provoost
+//        vSeeds.emplace_back("seed.bitcoin.sipa.be"); // Pieter Wuille, only supports x1, x5, x9, and xd
+//        vSeeds.emplace_back("dnsseed.bluematt.me"); // Matt Corallo, only supports x9
+//        vSeeds.emplace_back("dnsseed.bitcoin.dashjr.org"); // Luke Dashjr
+//        vSeeds.emplace_back("seed.bitcoinstats.com"); // Christian Decker, supports x1 - xf
+//        vSeeds.emplace_back("seed.bitcoin.jonasschnelli.ch"); // Jonas Schnelli, only supports x1, x5, x9, and xd
+//        vSeeds.emplace_back("seed.btc.petertodd.org"); // Peter Todd, only supports x1, x5, x9, and xd
+//        vSeeds.emplace_back("seed.bitcoin.sprovoost.nl"); // Sjors Provoost
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,0);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,5);
@@ -304,7 +305,8 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1493596800; // May 1st 2017
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000007dbe94253893cbd463");
+        //consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000007dbe94253893cbd463");
+        consensus.nMinimumChainWork = uint256S("0x00");
 
         // By default assume that the signatures in ancestors of this block are valid.
         consensus.defaultAssumeValid = uint256S("0x0000000000000037a8cd3e06cd5edbfe9dd1dbcc5dacab279376ef7cfc2b4c75"); //1354312
@@ -323,23 +325,24 @@ public:
 
         // PrintGenesisBlockProof(nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse);
 
-        const uint32_t nTimeGenesis = 1541674148;
-        const uint32_t cuckooNonceGenesis = 29;
-        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {34843, 39988, 57980, 84337, 102314, 119495, 148938, 165539, 175064, 178706, 208843, 211256, 215464, 246843, 259344, 268958, 273222, 297633, 302251, 304586, 335164, 336242, 340044, 354780, 361949, 396210, 403496, 406665, 407094, 408322, 412341, 437395, 442591, 462903, 473483, 480376, 483029, 491491, 496804, 505415, 510446, 510947};
+        const uint32_t nTimeGenesis = 1542427810;
+        const uint32_t cuckooNonceGenesis = 2;
+        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {8826, 9393, 18805, 24198};
 
         genesis = CreateGenesisBlock(nTimeGenesis, nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse, cuckooNonceGenesis, cuckooNoncesGenesis);
         consensus.hashGenesisBlock = genesis.GetHash();
 
-        assert(consensus.hashGenesisBlock == uint256S("0x98f1d9b6e1bd8a55a2a0559d40fd02b7bfae26297c01dd5824d0b5da21e37dc8"));
+        assert(consensus.hashGenesisBlock == uint256S("0x34b92a42e7cfdb0a319cad19c50c51b7f2f153a8b2259a4ffac74c514c4f9e36"));
         assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
         // nodes with support for servicebits filtering should be at the top
-        vSeeds.emplace_back("testnet-seed.bitcoin.jonasschnelli.ch");
-        vSeeds.emplace_back("seed.tbtc.petertodd.org");
-        vSeeds.emplace_back("seed.testnet.bitcoin.sprovoost.nl");
-        vSeeds.emplace_back("testnet-seed.bluematt.me"); // Just a static list of stable node(s), only supports x9
+//        vSeeds.emplace_back("testnet-seed.bitcoin.jonasschnelli.ch");
+//        vSeeds.emplace_back("seed.tbtc.petertodd.org");
+//        vSeeds.emplace_back("seed.testnet.bitcoin.sprovoost.nl");
+//        vSeeds.emplace_back("testnet-seed.bluematt.me"); // Just a static list of stable node(s), only supports x9
+
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,111);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,196);
@@ -425,14 +428,14 @@ public:
 
         // PrintGenesisBlockProof(nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse);
 
-        const uint32_t nTimeGenesis = 1541674155;
-        const uint32_t cuckooNonceGenesis = 11;
-        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {5509, 11139, 16756, 17274, 25498, 34340, 45434, 55376, 70206, 76525, 91243, 109116, 121300, 124393, 128891, 130461, 149879, 175864, 182213, 186762, 219519, 239935, 243906, 248488, 256644, 277293, 295598, 303811, 319736, 325718, 373361, 377918, 389043, 392970, 402520, 423771, 434351, 436950, 438628, 440961, 453040, 510654};
+        const uint32_t nTimeGenesis = 1542427810;
+        const uint32_t cuckooNonceGenesis = 2;
+        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {3702, 17289, 17477, 30402};
 
         genesis = CreateGenesisBlock(nTimeGenesis, nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse, cuckooNonceGenesis, cuckooNoncesGenesis);
         consensus.hashGenesisBlock = genesis.GetHash();
 
-        assert(consensus.hashGenesisBlock == uint256S("0xb9c81133be59ffe77b7aa5dcb8e81afc23369990bbf029eccfd42a579d2b4f31"));
+        assert(consensus.hashGenesisBlock == uint256S("0x44a788e839354a908787b9e20159d5c11e5ac4ee6b90f1c5f6c4c360d0333bd7"));
         assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
