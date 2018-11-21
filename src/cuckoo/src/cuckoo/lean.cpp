@@ -65,13 +65,20 @@ u32 cuckooPath(cuckoo_hash &cuckoo, word_t u, word_t *us, bool *success) {
     u32 nu;
     for (nu = 0; u; u = cuckoo[u]) {
         if (nu >= MAXPATHLEN) {
+            // 单边union find 寻找到的点太多并超过上限
+
             while (nu-- && us[nu] != u) ;
 //            if (!~nu)
 //                printf("maximum path length exceeded\n");
 //            else printf("illegal %4d-cycle\n", MAXPATHLEN-nu);
 //            pthread_exit(NULL);
+
+            // nu == (0-1) == 0xffffffff, 点没有重复的,无环
             if (!~nu) {
-                //throw std::runtime_error("cuckooPath err");
+                *success = false;
+                return 0;
+            } else {
+                // nu != 0xffffffff, 点有重复的,单边就有环了
                 *success = false;
                 return 0;
             }
