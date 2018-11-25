@@ -32,7 +32,8 @@ static CBlock BuildBlockTestCase() {
     block.vtx[0] = MakeTransactionRef(tx);
     block.nVersion = 42;
     block.hashPrevBlock = InsecureRand256();
-    block.nBits = 0x207fffff;
+    //block.nBits = 0x207fffff;
+    // PKCTODO cuckooBits test
 
     tx.vin[0].prevout.hash = InsecureRand256();
     tx.vin[0].prevout.n = 0;
@@ -292,7 +293,8 @@ BOOST_AUTO_TEST_CASE(EmptyBlockRoundTripTest)
     block.vtx[0] = MakeTransactionRef(std::move(coinbase));
     block.nVersion = 42;
     block.hashPrevBlock = InsecureRand256();
-    block.nBits = 0x207fffff;
+    //block.nBits = 0x207fffff;
+    // PKCTODO cuckooBits test
 
     bool mutated;
     block.hashMerkleRoot = BlockMerkleRoot(block, &mutated);

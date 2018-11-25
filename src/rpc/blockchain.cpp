@@ -62,9 +62,15 @@ double GetDifficulty(const CBlockIndex* blockindex)
         return 1.0;
     }
 
-    int nShift = (blockindex->nBits >> 24) & 0xff;
-    double dDiff =
-        (double)0x0000ffff / (double)(blockindex->nBits & 0x00ffffff);
+    int nShift = 0;
+
+    double dDiff = 0.0;
+//    int nShift = (blockindex->nBits >> 24) & 0xff;
+//    double dDiff =
+//        (double)0x0000ffff / (double)(blockindex->nBits & 0x00ffffff);
+
+// PKCTODO cuckooBits
+
 
     while (nShift < 29)
     {
@@ -104,7 +110,8 @@ UniValue blockheaderToJSON(const CBlockIndex* blockindex)
     }
     result.pushKV("cuckooNonces", cuckooNonces);
 
-    result.pushKV("bits", strprintf("%08x", blockindex->nBits));
+    //result.pushKV("bits", strprintf("%08x", blockindex->nBits));
+    result.pushKV("bits", strprintf("%08x", blockindex->cuckooBits));
     result.pushKV("difficulty", GetDifficulty(blockindex));
     result.pushKV("chainwork", blockindex->nChainWork.GetHex());
     result.pushKV("nTx", (uint64_t)blockindex->nTx);
@@ -157,7 +164,8 @@ UniValue blockToJSON(const CBlock& block, const CBlockIndex* blockindex, bool tx
     }
     result.pushKV("cuckooNonces", cuckooNonces);
 
-    result.pushKV("bits", strprintf("%08x", block.nBits));
+    // result.pushKV("bits", strprintf("%08x", block.nBits));
+    result.pushKV("bits", strprintf("%08x", block.cuckooBits));
     result.pushKV("difficulty", GetDifficulty(blockindex));
     result.pushKV("chainwork", blockindex->nChainWork.GetHex());
     result.pushKV("nTx", (uint64_t)blockindex->nTx);

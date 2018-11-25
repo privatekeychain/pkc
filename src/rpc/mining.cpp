@@ -596,7 +596,9 @@ static UniValue getblocktemplate(const JSONRPCRequest& request)
     UniValue aux(UniValue::VOBJ);
     aux.pushKV("flags", HexStr(COINBASE_FLAGS.begin(), COINBASE_FLAGS.end()));
 
-    arith_uint256 hashTarget = arith_uint256().SetCompact(pblock->nBits);
+    // PKCTODO cuckooBits
+    // arith_uint256 hashTarget = arith_uint256().SetCompact(pblock->nBits);
+    arith_uint256 hashTarget = arith_uint256().SetCompact(pblock->cuckooBits);
 
     UniValue aMutable(UniValue::VARR);
     aMutable.push_back("time");
@@ -684,7 +686,8 @@ static UniValue getblocktemplate(const JSONRPCRequest& request)
         result.pushKV("weightlimit", (int64_t)MAX_BLOCK_WEIGHT);
     }
     result.pushKV("curtime", pblock->GetBlockTime());
-    result.pushKV("bits", strprintf("%08x", pblock->nBits));
+    //result.pushKV("bits", strprintf("%08x", pblock->nBits));
+    result.pushKV("bits", strprintf("%08x", pblock->cuckooBits));
     result.pushKV("height", (int64_t)(pindexPrev->nHeight+1));
 
     if (!pblocktemplate->vchCoinbaseCommitment.empty() && fSupportsSegwit) {

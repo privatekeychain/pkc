@@ -31,9 +31,10 @@ public:
     uint256 hashPrevBlock;
     uint256 hashMerkleRoot;
     uint32_t nTime;
-    uint32_t nBits;
+    //uint32_t nBits;
     uint32_t nNonce;
 
+    uint32_t cuckooBits;
     uint32_t cuckooNonce;
     std::vector<word_t> cuckooNonces;
 
@@ -50,9 +51,10 @@ public:
         READWRITE(hashPrevBlock);
         READWRITE(hashMerkleRoot);
         READWRITE(nTime);
-        READWRITE(nBits);
+        //READWRITE(nBits);
         READWRITE(nNonce);
 
+        READWRITE(cuckooBits);
         READWRITE(cuckooNonce);
         READWRITE(cuckooNonces);
     }
@@ -63,16 +65,19 @@ public:
         hashPrevBlock.SetNull();
         hashMerkleRoot.SetNull();
         nTime = 0;
-        nBits = 0;
+        //nBits = 0;
         nNonce = 0;
 
+        cuckooBits = 0;
         cuckooNonce = 0;
         cuckooNonces.clear();
     }
 
     bool IsNull() const
     {
-        return (nBits == 0);
+        // PKCTODO cuckooBits
+        //return (nBits == 0);
+        return (cuckooBits == 0);
     }
 
     uint256 GetHash() const;
@@ -126,9 +131,10 @@ public:
         block.hashPrevBlock  = hashPrevBlock;
         block.hashMerkleRoot = hashMerkleRoot;
         block.nTime          = nTime;
-        block.nBits          = nBits;
+        //block.nBits          = nBits;
         block.nNonce         = nNonce;
 
+        block.cuckooBits = cuckooBits;
         block.cuckooNonce = cuckooNonce;
         block.cuckooNonces = cuckooNonces;
 
