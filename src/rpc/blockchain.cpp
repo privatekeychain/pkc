@@ -111,7 +111,6 @@ UniValue blockheaderToJSON(const CBlockIndex* blockindex)
     }
     result.pushKV("cuckooNonces", cuckooNonces);
 
-    //result.pushKV("bits", strprintf("%08x", blockindex->nBits));
     result.pushKV("bits", strprintf("%08x", blockindex->cuckooBits));
     result.pushKV("difficulty", GetDifficulty(blockindex));
     result.pushKV("chainwork", blockindex->nChainWork.GetHex());
@@ -165,7 +164,6 @@ UniValue blockToJSON(const CBlock& block, const CBlockIndex* blockindex, bool tx
     }
     result.pushKV("cuckooNonces", cuckooNonces);
 
-    // result.pushKV("bits", strprintf("%08x", block.nBits));
     result.pushKV("bits", strprintf("%08x", block.cuckooBits));
     result.pushKV("difficulty", GetDifficulty(blockindex));
     result.pushKV("chainwork", blockindex->nChainWork.GetHex());
