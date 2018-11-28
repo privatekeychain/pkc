@@ -259,7 +259,6 @@ public:
         nVersion       = block.nVersion;
         hashMerkleRoot = block.hashMerkleRoot;
         nTime          = block.nTime;
-        nNonce         = block.nNonce;
         cuckooBits     = block.cuckooBits;
         cuckooNonce    = block.cuckooNonce;
         cuckooNonces   = block.cuckooNonces;
@@ -291,7 +290,6 @@ public:
             block.hashPrevBlock = pprev->GetBlockHash();
         block.hashMerkleRoot = hashMerkleRoot;
         block.nTime          = nTime;
-        block.nNonce         = nNonce;
 
         block.cuckooBits     = cuckooBits;
         block.cuckooNonce    = cuckooNonce;
@@ -426,7 +424,6 @@ public:
         block.hashPrevBlock   = hashPrev;
         block.hashMerkleRoot  = hashMerkleRoot;
         block.nTime           = nTime;
-        block.nNonce          = nNonce;
         block.cuckooBits   = cuckooBits;
         block.cuckooNonce  = cuckooNonce;
         block.cuckooNonces = cuckooNonces;

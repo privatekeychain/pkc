@@ -31,7 +31,6 @@ public:
     uint256 hashPrevBlock;
     uint256 hashMerkleRoot;
     uint32_t nTime;
-    uint32_t nNonce;
 
     uint32_t cuckooBits;
     uint32_t cuckooNonce;
@@ -50,7 +49,6 @@ public:
         READWRITE(hashPrevBlock);
         READWRITE(hashMerkleRoot);
         READWRITE(nTime);
-        READWRITE(nNonce);
 
         READWRITE(cuckooBits);
         READWRITE(cuckooNonce);
@@ -63,7 +61,6 @@ public:
         hashPrevBlock.SetNull();
         hashMerkleRoot.SetNull();
         nTime = 0;
-        nNonce = 0;
 
         cuckooBits = 0;
         cuckooNonce = 0;
@@ -126,7 +123,6 @@ public:
         block.hashPrevBlock  = hashPrevBlock;
         block.hashMerkleRoot = hashMerkleRoot;
         block.nTime          = nTime;
-        block.nNonce         = nNonce;
 
         block.cuckooBits = cuckooBits;
         block.cuckooNonce = cuckooNonce;

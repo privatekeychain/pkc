@@ -18,17 +18,13 @@ uint256 CBlockHeader::GetHash() const
 std::string CBlock::ToString() const
 {
     std::stringstream s;
-    s << strprintf("CBlock(hash=%s, ver=0x%08x, hashPrevBlock=%s, hashMerkleRoot=%s, nTime=%u, cuckooBits=%08x, nNonce=%u, vtx=%u",
+    s << strprintf("CBlock(hash=%s, ver=0x%08x, hashPrevBlock=%s, hashMerkleRoot=%s, nTime=%u, cuckooBits=%08x, cuckooNonce=%u, vtx=%u",
         GetHash().ToString(),
         nVersion,
         hashPrevBlock.ToString(),
         hashMerkleRoot.ToString(),
-        nTime, cuckooBits, nNonce,
+        nTime, cuckooBits, cuckooNonce,
         vtx.size());
-
-    s << strprintf(", cuckooNonce=%u, ", cuckooNonce);
-
-    s << "cuckooNonces=";
 
     for (size_t i = 0; i < cuckooNonces.size(); ++i) {
         s << strprintf("%u", cuckooNonces[i]);

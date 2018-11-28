@@ -128,7 +128,7 @@ UniValue generateBlocks(std::shared_ptr<CReserveScript> coinbaseScript, int nGen
         }
 
 
-        for( ;nMaxTries > 0 && pblock->nNonce < nInnerLoopCount; )
+        for( ;nMaxTries > 0 && pblock->cuckooNonce < nInnerLoopCount; )
         {
             if (FindNewCycle(pblock) && CheckProofOfWorkNew(*pblock))
             {
@@ -136,24 +136,22 @@ UniValue generateBlocks(std::shared_ptr<CReserveScript> coinbaseScript, int nGen
             }
             else
             {
-                ++pblock->nNonce;
+                ++pblock->cuckooNonce;
                 --nMaxTries;
 
                 pblock->cuckooNonces.clear();
-                ++pblock->cuckooNonce;
+
             }
         }
 
-//        while (nMaxTries > 0 && pblock->nNonce < nInnerLoopCount && !CheckProofOfWork(pblock->GetHash(), pblock->nBits, Params().GetConsensus())) {
-//            ++pblock->nNonce;
-//            --nMaxTries;
-//        }
         if (nMaxTries == 0) {
             break;
         }
-        if (pblock->nNonce == nInnerLoopCount) {
+
+        if (pblock->cuckooNonce == nInnerLoopCount) {
             continue;
         }
+
         std::shared_ptr<const CBlock> shared_pblock = std::make_shared<const CBlock>(*pblock);
         if (!ProcessNewBlock(Params(), shared_pblock, true, nullptr))
             throw JSONRPCError(RPC_INTERNAL_ERROR, "ProcessNewBlock, block not accepted");
@@ -548,7 +546,7 @@ static UniValue getblocktemplate(const JSONRPCRequest& request)
 
     // Update nTime
     UpdateTime(pblock, consensusParams, pindexPrev);
-    pblock->nNonce = 0;
+    pblock->cuckooNonce = 0;
 
     // NOTE: If at some point we support pre-segwit miners post-segwit-activation, this needs to take segwit support into consideration
     const bool fPreSegWit = (ThresholdState::ACTIVE != VersionBitsState(pindexPrev, consensusParams, Consensus::DEPLOYMENT_SEGWIT, versionbitscache));
