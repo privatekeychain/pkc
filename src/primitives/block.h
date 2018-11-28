@@ -31,7 +31,6 @@ public:
     uint256 hashPrevBlock;
     uint256 hashMerkleRoot;
     uint32_t nTime;
-
     uint32_t cuckooBits;
     uint32_t cuckooNonce;
     std::vector<word_t> cuckooNonces;
@@ -49,7 +48,6 @@ public:
         READWRITE(hashPrevBlock);
         READWRITE(hashMerkleRoot);
         READWRITE(nTime);
-
         READWRITE(cuckooBits);
         READWRITE(cuckooNonce);
         READWRITE(cuckooNonces);
@@ -61,7 +59,6 @@ public:
         hashPrevBlock.SetNull();
         hashMerkleRoot.SetNull();
         nTime = 0;
-
         cuckooBits = 0;
         cuckooNonce = 0;
         cuckooNonces.clear();

@@ -95,17 +95,24 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nF
 //    return true;
 //}
 
+// 获取CBlockHeader的hash,作为cuckoo cycle的难题源
 std::string GetHeaderHashFromBlock(const CBlockHeader &blockHeader)
 {
     std::vector<unsigned char> serializedHeader;
     CVectorWriter(SER_NETWORK, INIT_PROTO_VERSION, serializedHeader, 0, blockHeader);
-    serializedHeader.resize(84);
+
+    // std::vector<word_t> cuckooNonces; cuckoo cycle解不算在header内
+
+    const size_t headerSize = 80;
+
+    serializedHeader.resize(headerSize);
 
     unsigned char hash[32];
-    CSHA256().Write(serializedHeader.data(), 84).Finalize(hash);
+    CSHA256().Write(serializedHeader.data(), headerSize).Finalize(hash);
     return std::string((const char*)hash, 32);
 }
 
+// 在CBlockHeader的hash的末尾放置cuckooNonce,cuckooSetheader时所需
 std::string PlaceNonceAtEndOfHeaderHash(const std::string& headerHash, uint32_t cuckooNonce)
 {
     size_t palceIdx = headerHash.length() / sizeof(uint32_t) - 1;
@@ -115,7 +122,7 @@ std::string PlaceNonceAtEndOfHeaderHash(const std::string& headerHash, uint32_t 
     }
 
     std::string tmp(headerHash);
-    ((uint32_t*)tmp.data())[palceIdx] = cuckooNonce;
+    ((uint32_t*)tmp.data())[palceIdx] = htole32(cuckooNonce);
     return tmp;
 }
 
