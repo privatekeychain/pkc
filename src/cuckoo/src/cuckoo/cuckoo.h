@@ -13,7 +13,7 @@
 #include <stdio.h>
 #endif
 
-#define EDGEBITS 15
+#define EDGEBITS 19
 
 // proof-of-work parameters
 #ifndef EDGEBITS
@@ -24,7 +24,7 @@
 #ifndef PROOFSIZE
 // the next most important parameter is the (even) length
 // of the cycle to be found. a minimum of 12 is recommended
-#define PROOFSIZE 4
+#define PROOFSIZE 42
 #endif
 
 // save some keystrokes since i'm a lazy typer
