@@ -596,8 +596,7 @@ static UniValue getblocktemplate(const JSONRPCRequest& request)
     UniValue aux(UniValue::VOBJ);
     aux.pushKV("flags", HexStr(COINBASE_FLAGS.begin(), COINBASE_FLAGS.end()));
 
-    // PKCTODO cuckooBits
-    // arith_uint256 hashTarget = arith_uint256().SetCompact(pblock->nBits);
+
     arith_uint256 hashTarget = arith_uint256().SetCompact(pblock->cuckooBits);
 
     UniValue aMutable(UniValue::VARR);

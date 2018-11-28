@@ -46,9 +46,9 @@ int64_t UpdateTime(CBlockHeader* pblock, const Consensus::Params& consensusParam
         pblock->nTime = nNewTime;
 
     // Updating time can change work required on testnet:
-    // PKCTODO cuckooBits
-//    if (consensusParams.fPowAllowMinDifficultyBlocks)
-//        pblock->nBits = GetNextWorkRequired(pindexPrev, pblock, consensusParams);
+
+    if (consensusParams.fPowAllowMinDifficultyBlocks)
+        pblock->cuckooBits = GetNextWorkRequired(pindexPrev, pblock, consensusParams);
 
     return nNewTime - nOldTime;
 }
@@ -169,8 +169,8 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     // Fill in header
     pblock->hashPrevBlock  = pindexPrev->GetBlockHash();
     UpdateTime(pblock, chainparams.GetConsensus(), pindexPrev);
-    // PKCTODO cuckooBits
-//    pblock->nBits          = GetNextWorkRequired(pindexPrev, pblock, chainparams.GetConsensus());
+
+    pblock->cuckooBits          = GetNextWorkRequired(pindexPrev, pblock, chainparams.GetConsensus());
     pblock->nNonce         = 0;
     pblock->cuckooNonce    = 0;
     pblock->cuckooNonces.clear();

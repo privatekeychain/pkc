@@ -24,7 +24,7 @@
 static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesisOutputScript, uint32_t nTime, uint32_t nNonce, uint32_t cuckooBits, int32_t nVersion, const CAmount& genesisReward,
                                  uint32_t cuckooNonce, const std::vector<word_t>& cuckooNonces)
 {
-    // PKCTODO cuckooBits
+
     CMutableTransaction txNew;
     txNew.nVersion = 1;
     txNew.vin.resize(1);
@@ -35,7 +35,6 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
 
     CBlock genesis;
     genesis.nTime    = nTime;
-    //genesis.nBits    = nBits;
     genesis.nNonce   = nNonce;
     genesis.nVersion = nVersion;
     genesis.vtx.push_back(MakeTransactionRef(std::move(txNew)));
@@ -60,16 +59,16 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
  *     CTxOut(nValue=50.00000000, scriptPubKey=0x5F1DF16B2B704C8A578D0B)
  *   vMerkleTree: 4a5e1e
  */
-static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward,
+static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t cuckooBits, int32_t nVersion, const CAmount& genesisReward,
                                  uint32_t cuckooNonce, const std::vector<word_t>& cuckooNonces)
 {
     const char* pszTimestamp = "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks";
     const CScript genesisOutputScript = CScript() << ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f") << OP_CHECKSIG;
-    return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward,
+    return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, cuckooBits, nVersion, genesisReward,
                               cuckooNonce, cuckooNonces);
 }
 
-static void PrintGenesisBlockProof(uint32_t nNonceIgnore, uint32_t nBitsIgnore, int32_t nVersionUse, const CAmount& genesisRewardUse) {
+static void PrintGenesisBlockProof(uint32_t nNonceIgnore, uint32_t cuckooBits, int32_t nVersionUse, const CAmount& genesisRewardUse) {
     bool finded = false;
 
     CBlock genesis;
@@ -79,7 +78,7 @@ static void PrintGenesisBlockProof(uint32_t nNonceIgnore, uint32_t nBitsIgnore, 
         uint32_t cuckooNonceTmp = 0;
 
         std::vector<word_t> cuckooNoncesTmp;
-        genesis = CreateGenesisBlock(nTimeTmp, nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse,
+        genesis = CreateGenesisBlock(nTimeTmp, nNonceIgnore, cuckooBits, nVersionUse, genesisRewardUse,
                                      cuckooNonceTmp, cuckooNoncesTmp);
 
         const int nInnerLoopCount = 0x10000;
@@ -199,17 +198,17 @@ public:
 
 
         const uint32_t nNonceIgnore = 2083236893;
-        const uint32_t nBitsIgnore = 0x1d00ffff;
+        const uint32_t cuckooBits = 0x1d00ffff;
         const int32_t nVersionUse = 1;
         const CAmount genesisRewardUse = 50 * COIN;
 
-//        PrintGenesisBlockProof(nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse);
+//        PrintGenesisBlockProof(nNonceIgnore, cuckooBits, nVersionUse, genesisRewardUse);
 
         const uint32_t nTimeGenesis = 1542427810;
         const uint32_t cuckooNonceGenesis = 2;
         const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {3702, 17289, 17477, 30402};
 
-        genesis = CreateGenesisBlock(nTimeGenesis, nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse, cuckooNonceGenesis, cuckooNoncesGenesis);
+        genesis = CreateGenesisBlock(nTimeGenesis, nNonceIgnore, cuckooBits, nVersionUse, genesisRewardUse, cuckooNonceGenesis, cuckooNoncesGenesis);
         consensus.hashGenesisBlock = genesis.GetHash();
 
         assert(consensus.hashGenesisBlock == uint256S("0x44a788e839354a908787b9e20159d5c11e5ac4ee6b90f1c5f6c4c360d0333bd7"));
@@ -321,17 +320,17 @@ public:
         nPruneAfterHeight = 1000;
 
         const uint32_t nNonceIgnore = 414098458;
-        const uint32_t nBitsIgnore = 0x1d00ffff;
+        const uint32_t cuckooBits = 0x1d00ffff;
         const int32_t nVersionUse = 1;
         const CAmount genesisRewardUse = 50 * COIN;
 
-        // PrintGenesisBlockProof(nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse);
+        // PrintGenesisBlockProof(nNonceIgnore, cuckooBits, nVersionUse, genesisRewardUse);
 
         const uint32_t nTimeGenesis = 1542427810;
         const uint32_t cuckooNonceGenesis = 2;
         const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {8826, 9393, 18805, 24198};
 
-        genesis = CreateGenesisBlock(nTimeGenesis, nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse, cuckooNonceGenesis, cuckooNoncesGenesis);
+        genesis = CreateGenesisBlock(nTimeGenesis, nNonceIgnore, cuckooBits, nVersionUse, genesisRewardUse, cuckooNonceGenesis, cuckooNoncesGenesis);
         consensus.hashGenesisBlock = genesis.GetHash();
 
         assert(consensus.hashGenesisBlock == uint256S("0x34b92a42e7cfdb0a319cad19c50c51b7f2f153a8b2259a4ffac74c514c4f9e36"));
@@ -424,17 +423,17 @@ public:
 
 
         const uint32_t nNonceIgnore = 2;
-        const uint32_t nBitsIgnore = 0x207fffff;
+        const uint32_t cuckooBits = 0x207fffff;
         const int32_t nVersionUse = 1;
         const CAmount genesisRewardUse = 50 * COIN;
 
-        // PrintGenesisBlockProof(nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse);
+        // PrintGenesisBlockProof(nNonceIgnore, cuckooBits, nVersionUse, genesisRewardUse);
 
         const uint32_t nTimeGenesis = 1542427810;
         const uint32_t cuckooNonceGenesis = 2;
         const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {3702, 17289, 17477, 30402};
 
-        genesis = CreateGenesisBlock(nTimeGenesis, nNonceIgnore, nBitsIgnore, nVersionUse, genesisRewardUse, cuckooNonceGenesis, cuckooNoncesGenesis);
+        genesis = CreateGenesisBlock(nTimeGenesis, nNonceIgnore, cuckooBits, nVersionUse, genesisRewardUse, cuckooNonceGenesis, cuckooNoncesGenesis);
         consensus.hashGenesisBlock = genesis.GetHash();
 
         assert(consensus.hashGenesisBlock == uint256S("0x44a788e839354a908787b9e20159d5c11e5ac4ee6b90f1c5f6c4c360d0333bd7"));

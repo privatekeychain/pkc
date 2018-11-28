@@ -210,7 +210,6 @@ public:
     int32_t nVersion;
     uint256 hashMerkleRoot;
     uint32_t nTime;
-    //uint32_t nBits;
     uint32_t nNonce;
 
     uint32_t cuckooBits;
@@ -242,7 +241,6 @@ public:
         nVersion       = 0;
         hashMerkleRoot = uint256();
         nTime          = 0;
-        //nBits          = 0;
         nNonce         = 0;
         cuckooBits     = 0;
         cuckooNonce    = 0;
@@ -261,7 +259,6 @@ public:
         nVersion       = block.nVersion;
         hashMerkleRoot = block.hashMerkleRoot;
         nTime          = block.nTime;
-        //nBits          = block.nBits;
         nNonce         = block.nNonce;
         cuckooBits     = block.cuckooBits;
         cuckooNonce    = block.cuckooNonce;
@@ -294,7 +291,6 @@ public:
             block.hashPrevBlock = pprev->GetBlockHash();
         block.hashMerkleRoot = hashMerkleRoot;
         block.nTime          = nTime;
-        //block.nBits          = nBits;
         block.nNonce         = nNonce;
 
         block.cuckooBits     = cuckooBits;
@@ -417,7 +413,6 @@ public:
         READWRITE(hashPrev);
         READWRITE(hashMerkleRoot);
         READWRITE(nTime);
-        //READWRITE(nBits);
         READWRITE(nNonce);
         READWRITE(cuckooBits);
         READWRITE(cuckooNonce);
@@ -431,7 +426,6 @@ public:
         block.hashPrevBlock   = hashPrev;
         block.hashMerkleRoot  = hashMerkleRoot;
         block.nTime           = nTime;
-        //block.nBits           = nBits;
         block.nNonce          = nNonce;
         block.cuckooBits   = cuckooBits;
         block.cuckooNonce  = cuckooNonce;

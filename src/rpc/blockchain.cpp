@@ -57,26 +57,27 @@ static CUpdatedBlock latestblock;
  */
 double GetDifficulty(const CBlockIndex* blockindex)
 {
+    // PKCTODO GetDifficulty 难度基准是否要改变?
     if (blockindex == nullptr)
     {
         return 1.0;
     }
 
-    int nShift = 0;
+    // 指数
+    int nShift = (blockindex->cuckooBits >> 24) & 0xff;
 
-    double dDiff = 0.0;
-//    int nShift = (blockindex->nBits >> 24) & 0xff;
-//    double dDiff =
-//        (double)0x0000ffff / (double)(blockindex->nBits & 0x00ffffff);
+    // 创世难度作为基准 / (sign+尾数)
+    double dDiff =
+        (double)0x0000ffff / (double)(blockindex->cuckooBits & 0x00ffffff);
 
-// PKCTODO cuckooBits
-
-
+    // 以0xffff作为基准,往右一字节,难度就*256
     while (nShift < 29)
     {
         dDiff *= 256.0;
         nShift++;
     }
+
+    // 以0xffff作为基准,往左一字节,难度就/256
     while (nShift > 29)
     {
         dDiff /= 256.0;
