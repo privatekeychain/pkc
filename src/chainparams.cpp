@@ -69,7 +69,8 @@ static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t cuckooBits, int32_t nV
 
 // 生成 1. nTime 2. cuckooNonce 3. cuckooNonces 4. hash
 static void PrintGenesisBlockProof(uint32_t cuckooBits, int32_t nVersion, const CAmount& genesisRewardUse,
-        uint32_t *nTimeOut, uint32_t *cuckooNonceOut, std::vector<word_t> *cuckooNoncesOut, std::string* hashOut) {
+        uint32_t *nTimeOut, uint32_t *cuckooNonceOut, std::vector<word_t> *cuckooNoncesOut, std::string* hashOut,
+        const Consensus::Params& params) {
     bool finded = false;
 
     CBlock genesis;
@@ -86,7 +87,7 @@ static void PrintGenesisBlockProof(uint32_t cuckooBits, int32_t nVersion, const 
 
         for ( ; genesis.cuckooNonce < nInnerLoopCount; )
         {
-            if (FindNewCycle(&genesis) && CheckProofOfWorkNew(genesis))
+            if (FindNewCycle(&genesis) && CheckProofOfWorkNew(genesis, params))
             {
                 break;
             }
@@ -163,7 +164,7 @@ public:
         consensus.BIP34Hash = uint256S("0x000000000000024b89b42a942fe0d9fea3bb44ab7bd1b19115dd6a759c0808b8");
         consensus.BIP65Height = 388381; // 000000000000000004c2b624ed5d7756c508d90fd0da2c7c679febfa6c4735f0
         consensus.BIP66Height = 363725; // 00000000000000000379eaa19dce8c9b722d46ae6a57c2f1a988119488b50931
-        consensus.powLimit = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.powLimit = uint256S("0x1999999999999999999999999999999999999999999999999999999999999999");
         consensus.nPowTargetTimespan = 14 * 24 * 60 * 60; // two weeks
         consensus.nPowTargetSpacing = 10 * 60;
         consensus.fPowAllowMinDifficultyBlocks = false;
@@ -186,6 +187,7 @@ public:
 
         // The best chain should have at least this much work.
 //        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000028822fef1c230963535a90d");
+        // PKCTODO 最长链最小工作量累计
         consensus.nMinimumChainWork = uint256S("0x00");
 
         // By default assume that the signatures in ancestors of this block are valid.
@@ -204,7 +206,7 @@ public:
         nPruneAfterHeight = 100000;
 
 
-        const uint32_t cuckooBits = 0x1d00ffff;
+        const uint32_t cuckooBits = 0x20199999;
         const int32_t nVersion = 1;
         const CAmount genesisReward = 50 * COIN;
 
@@ -213,7 +215,7 @@ public:
         std::vector<word_t> cuckooNoncesGenesis;
         std::string hash;
 
-        PrintGenesisBlockProof(cuckooBits, nVersion, genesisReward, &nTimeGenesis, &cuckooNonceGenesis, &cuckooNoncesGenesis, &hash);
+        PrintGenesisBlockProof(cuckooBits, nVersion, genesisReward, &nTimeGenesis, &cuckooNonceGenesis, &cuckooNoncesGenesis, &hash, consensus);
 
         genesis = CreateGenesisBlock(nTimeGenesis, cuckooBits, nVersion, genesisReward, cuckooNonceGenesis, cuckooNoncesGenesis);
         consensus.hashGenesisBlock = genesis.GetHash();
@@ -267,7 +269,7 @@ public:
         consensus.BIP34Hash = uint256S("0x0000000023b3a96d3484e5abb3755c413e7d41500f8e2a5c3f0dd01299cd8ef8");
         consensus.BIP65Height = 581885; // 00000000007f6655f22f98e72ed80d8b06dc761d5da09df0fa1dc4be4f861eb6
         consensus.BIP66Height = 330776; // 000000002104c8c45e99a8853285a3b592602a3ccde2b832481da85e9e4ba182
-        consensus.powLimit = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.powLimit = uint256S("0x1999999999999999999999999999999999999999999999999999999999999999");
         consensus.nPowTargetTimespan = 14 * 24 * 60 * 60; // two weeks
         consensus.nPowTargetSpacing = 10 * 60;
         consensus.fPowAllowMinDifficultyBlocks = true;
@@ -302,7 +304,7 @@ public:
         nDefaultPort = 18333;
         nPruneAfterHeight = 1000;
 
-        const uint32_t cuckooBits = 0x1d00ffff;
+        const uint32_t cuckooBits = 0x20199999;
         const int32_t nVersion = 1;
         const CAmount genesisReward = 50 * COIN;
 
@@ -311,7 +313,7 @@ public:
         std::vector<word_t> cuckooNoncesGenesis;
         std::string hash;
 
-        PrintGenesisBlockProof(cuckooBits, nVersion, genesisReward, &nTimeGenesis, &cuckooNonceGenesis, &cuckooNoncesGenesis, &hash);
+        PrintGenesisBlockProof(cuckooBits, nVersion, genesisReward, &nTimeGenesis, &cuckooNonceGenesis, &cuckooNoncesGenesis, &hash, consensus);
 
         genesis = CreateGenesisBlock(nTimeGenesis, cuckooBits, nVersion, genesisReward, cuckooNonceGenesis, cuckooNoncesGenesis);
         consensus.hashGenesisBlock = genesis.GetHash();
@@ -409,7 +411,7 @@ public:
         std::vector<word_t> cuckooNoncesGenesis;
         std::string hash;
 
-        PrintGenesisBlockProof(cuckooBits, nVersion, genesisReward, &nTimeGenesis, &cuckooNonceGenesis, &cuckooNoncesGenesis, &hash);
+        PrintGenesisBlockProof(cuckooBits, nVersion, genesisReward, &nTimeGenesis, &cuckooNonceGenesis, &cuckooNoncesGenesis, &hash, consensus);
 
         genesis = CreateGenesisBlock(nTimeGenesis, cuckooBits, nVersion, genesisReward, cuckooNonceGenesis, cuckooNoncesGenesis);
         consensus.hashGenesisBlock = genesis.GetHash();

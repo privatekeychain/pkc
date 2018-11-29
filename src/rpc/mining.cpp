@@ -130,7 +130,7 @@ UniValue generateBlocks(std::shared_ptr<CReserveScript> coinbaseScript, int nGen
 
         for( ;nMaxTries > 0 && pblock->cuckooNonce < nInnerLoopCount; )
         {
-            if (FindNewCycle(pblock) && CheckProofOfWorkNew(*pblock))
+            if (FindNewCycle(pblock) && CheckProofOfWorkNew(*pblock, Params().GetConsensus()))
             {
                 break;
             }

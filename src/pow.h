@@ -22,8 +22,8 @@ class uint256;
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params&);
 unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nFirstBlockTime, const Consensus::Params&);
 
-/** Check whether a block hash satisfies the proof-of-work requirement specified by nBits */
-//bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params&);
+
+bool CheckProofOfWorkHashImpl(uint256 hash, unsigned int nBits, const Consensus::Params& params);
 
 // 从CBlockHeader提取HeaderHash,cuckoo-cycle寻找时用
 std::string GetHeaderHashFromBlock(const CBlockHeader &blockHeader);
@@ -34,7 +34,7 @@ std::string PlaceNonceAtEndOfHeaderHash(const std::string& headerHash, uint32_t 
 bool CheckProofOfWorkCuckooCycleImpl(const std::string &headerHashWithCuckooNonce,
                                      const std::vector<word_t> &cuckooNonces);
 
-bool CheckProofOfWorkNew(const CBlockHeader &blockHeader);
+bool CheckProofOfWorkNew(const CBlockHeader &blockHeader, const Consensus::Params& params);
 
 bool FindNewCycle(CBlockHeader *blockHeader);
 

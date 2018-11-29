@@ -1095,7 +1095,7 @@ bool ReadBlockFromDisk(CBlock& block, const CDiskBlockPos& pos, const Consensus:
 //    if (!CheckProofOfWork(block.GetHash(), block.nBits, consensusParams))
 //        return error("ReadBlockFromDisk: Errors in block header at %s", pos.ToString());
 
-    if (!CheckProofOfWorkNew(block))
+    if (!CheckProofOfWorkNew(block, consensusParams))
         return error("ReadBlockFromDisk: Errors in block header at %s", pos.ToString());
 
     return true;
@@ -3087,7 +3087,7 @@ static bool CheckBlockHeader(const CBlockHeader& block, CValidationState& state,
 //    if (fCheckPOW && !CheckProofOfWork(block.GetHash(), block.nBits, consensusParams))
 //        return state.DoS(50, false, REJECT_INVALID, "high-hash", false, "proof of work failed");
 
-    if (fCheckPOW && !CheckProofOfWorkNew(block))
+    if (fCheckPOW && !CheckProofOfWorkNew(block, consensusParams))
         return state.DoS(50, false, REJECT_INVALID, "high-hash", false, "proof of work failed");
 
     return true;

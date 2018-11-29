@@ -76,26 +76,25 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nF
     return bnNew.GetCompact();
 }
 
-//bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params& params)
-//{
-//    bool fNegative;
-//    bool fOverflow;
-//    arith_uint256 bnTarget;
-//
-//    bnTarget.SetCompact(nBits, &fNegative, &fOverflow);
-//
-//    // Check range
-//    if (fNegative || bnTarget == 0 || fOverflow || bnTarget > UintToArith256(params.powLimit))
-//        return false;
-//
-//    // Check proof of work matches claimed amount
-//    if (UintToArith256(hash) > bnTarget)
-//        return false;
-//
-//    return true;
-//}
+bool CheckProofOfWorkHashImpl(uint256 hash, unsigned int nBits, const Consensus::Params& params)
+{
+    bool fNegative;
+    bool fOverflow;
+    arith_uint256 bnTarget;
 
-// 获取CBlockHeader的hash,作为cuckoo cycle的难题源
+    bnTarget.SetCompact(nBits, &fNegative, &fOverflow);
+
+    // Check range
+    if (fNegative || bnTarget == 0 || fOverflow || bnTarget > UintToArith256(params.powLimit))
+        return false;
+
+    // Check proof of work matches claimed amount
+    if (UintToArith256(hash) > bnTarget)
+        return false;
+
+    return true;
+}
+
 std::string GetHeaderHashFromBlock(const CBlockHeader &blockHeader)
 {
     std::vector<unsigned char> serializedHeader;
@@ -112,7 +111,6 @@ std::string GetHeaderHashFromBlock(const CBlockHeader &blockHeader)
     return std::string((const char*)hash, 32);
 }
 
-// 在CBlockHeader的hash的末尾放置cuckooNonce,cuckooSetheader时所需
 std::string PlaceNonceAtEndOfHeaderHash(const std::string& headerHash, uint32_t cuckooNonce)
 {
     size_t palceIdx = headerHash.length() / sizeof(uint32_t) - 1;
@@ -142,11 +140,13 @@ bool CheckProofOfWorkCuckooCycleImpl(const std::string &headerHashWithCuckooNonc
     return pow_rc == POW_OK;
 }
 
-bool CheckProofOfWorkNew(const CBlockHeader &blockHeader)
+bool CheckProofOfWorkNew(const CBlockHeader &blockHeader, const Consensus::Params& params)
 {
     std::string headerHash = GetHeaderHashFromBlock(blockHeader);
     std::string headerHashWithCuckooNonce = PlaceNonceAtEndOfHeaderHash(headerHash, blockHeader.cuckooNonce);
-    return CheckProofOfWorkCuckooCycleImpl(headerHashWithCuckooNonce, blockHeader.cuckooNonces);
+    bool cuckooFinded = CheckProofOfWorkCuckooCycleImpl(headerHashWithCuckooNonce, blockHeader.cuckooNonces);
+    bool hashVerified = CheckProofOfWorkHashImpl(blockHeader.GetHash(), blockHeader.cuckooBits, params);
+    return cuckooFinded && hashVerified;
 }
 
 bool FindNewCycle(CBlockHeader *blockHeader)
