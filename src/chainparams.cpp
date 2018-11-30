@@ -210,18 +210,22 @@ public:
         const int32_t nVersion = 1;
         const CAmount genesisReward = 50 * COIN;
 
-        uint32_t nTimeGenesis = 0;
-        uint32_t cuckooNonceGenesis = 0;
-        std::vector<word_t> cuckooNoncesGenesis;
-        std::string hash;
+//        uint32_t nTimeGenesis = 0;
+//        uint32_t cuckooNonceGenesis = 0;
+//        std::vector<word_t> cuckooNoncesGenesis;
+//        std::string hash;
+//
+//        PrintGenesisBlockProof(cuckooBits, nVersion, genesisReward, &nTimeGenesis, &cuckooNonceGenesis, &cuckooNoncesGenesis, &hash, consensus);
 
-        PrintGenesisBlockProof(cuckooBits, nVersion, genesisReward, &nTimeGenesis, &cuckooNonceGenesis, &cuckooNoncesGenesis, &hash, consensus);
+        const uint32_t nTimeGenesis = 1543542327;
+        const uint32_t cuckooNonceGenesis = 751;
+        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {5968, 6935, 24613, 29342, 64512, 77463, 106588, 111796, 126270, 155053, 184093, 201011, 214172, 224643, 238168, 242229, 286905, 312717, 317888, 338515, 352903, 355669, 363711, 375059, 381856, 440994, 442636, 445442, 468512, 468879, 471482, 475113, 482731, 489040, 490515, 490944, 499778, 502975, 505971, 506995, 515239, 523036};
 
         genesis = CreateGenesisBlock(nTimeGenesis, cuckooBits, nVersion, genesisReward, cuckooNonceGenesis, cuckooNoncesGenesis);
-        consensus.hashGenesisBlock = genesis.GetHash();
 
-        assert(consensus.hashGenesisBlock == uint256S(hash.c_str()));
-        //assert(consensus.hashGenesisBlock == uint256S("0x44a788e839354a908787b9e20159d5c11e5ac4ee6b90f1c5f6c4c360d0333bd7"));
+        consensus.hashGenesisBlock = genesis.GetHash();
+//        assert(consensus.hashGenesisBlock == uint256S(hash.c_str()));
+        assert(consensus.hashGenesisBlock == uint256S("0x1441156f9186bf9f2767be8c1cf5c9a0d1271ce67bdea50b6cbee804e4c85c20"));
         assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
 
 
@@ -308,18 +312,21 @@ public:
         const int32_t nVersion = 1;
         const CAmount genesisReward = 50 * COIN;
 
-        uint32_t nTimeGenesis = 0;
-        uint32_t cuckooNonceGenesis = 0;
-        std::vector<word_t> cuckooNoncesGenesis;
-        std::string hash;
+//        uint32_t nTimeGenesis = 0;
+//        uint32_t cuckooNonceGenesis = 0;
+//        std::vector<word_t> cuckooNoncesGenesis;
+//        std::string hash;
+//
+//        PrintGenesisBlockProof(cuckooBits, nVersion, genesisReward, &nTimeGenesis, &cuckooNonceGenesis, &cuckooNoncesGenesis, &hash, consensus);
 
-        PrintGenesisBlockProof(cuckooBits, nVersion, genesisReward, &nTimeGenesis, &cuckooNonceGenesis, &cuckooNoncesGenesis, &hash, consensus);
-
+        const uint32_t nTimeGenesis = 1543542470;
+        const uint32_t cuckooNonceGenesis = 429;
+        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {5553, 12004, 12438, 18937, 20313, 52102, 79171, 100315, 106493, 108103, 125886, 144183, 163406, 180986, 189868, 190114, 200108, 213295, 223267, 271113, 274175, 277398, 292348, 297699, 298111, 323388, 331246, 335806, 352392, 378372, 379137, 380594, 382129, 391507, 425879, 445198, 451192, 471453, 472084, 473267, 486532, 487925};
         genesis = CreateGenesisBlock(nTimeGenesis, cuckooBits, nVersion, genesisReward, cuckooNonceGenesis, cuckooNoncesGenesis);
-        consensus.hashGenesisBlock = genesis.GetHash();
 
-        assert(consensus.hashGenesisBlock == uint256S(hash.c_str()));
-        //assert(consensus.hashGenesisBlock == uint256S("0x34b92a42e7cfdb0a319cad19c50c51b7f2f153a8b2259a4ffac74c514c4f9e36"));
+        consensus.hashGenesisBlock = genesis.GetHash();
+//        assert(consensus.hashGenesisBlock == uint256S(hash.c_str()));
+        assert(consensus.hashGenesisBlock == uint256S("0x14c04fadfd8efd0dd37315b449afb3ffcbe46b1b144f2e8bee0ac83c32f6e58a"));
         assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
 
         vFixedSeeds.clear();
@@ -406,18 +413,22 @@ public:
         const int32_t nVersion = 1;
         const CAmount genesisReward = 50 * COIN;
 
-        uint32_t nTimeGenesis = 0;
-        uint32_t cuckooNonceGenesis = 0;
-        std::vector<word_t> cuckooNoncesGenesis;
-        std::string hash;
+//        uint32_t nTimeGenesis = 0;
+//        uint32_t cuckooNonceGenesis = 0;
+//        std::vector<word_t> cuckooNoncesGenesis;
+//        std::string hash;
+//
+//        PrintGenesisBlockProof(cuckooBits, nVersion, genesisReward, &nTimeGenesis, &cuckooNonceGenesis, &cuckooNoncesGenesis, &hash, consensus);
 
-        PrintGenesisBlockProof(cuckooBits, nVersion, genesisReward, &nTimeGenesis, &cuckooNonceGenesis, &cuckooNoncesGenesis, &hash, consensus);
+        const uint32_t nTimeGenesis = 1543542551;
+        const uint32_t cuckooNonceGenesis = 326;
+        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {7941, 12163, 14465, 17566, 28237, 29760, 47525, 50336, 50451, 54293, 60166, 69054, 74640, 93176, 127142, 130441, 131865, 138640, 148018, 154680, 208602, 214003, 218284, 234417, 241264, 282198, 284448, 337886, 352712, 363111, 369222, 376463, 385773, 391529, 403528, 403544, 430669, 443391, 450433, 473272, 508452, 509034};
 
         genesis = CreateGenesisBlock(nTimeGenesis, cuckooBits, nVersion, genesisReward, cuckooNonceGenesis, cuckooNoncesGenesis);
-        consensus.hashGenesisBlock = genesis.GetHash();
 
-        assert(consensus.hashGenesisBlock == uint256S(hash.c_str()));
-        //assert(consensus.hashGenesisBlock == uint256S("0x44a788e839354a908787b9e20159d5c11e5ac4ee6b90f1c5f6c4c360d0333bd7"));
+        consensus.hashGenesisBlock = genesis.GetHash();
+//        assert(consensus.hashGenesisBlock == uint256S(hash.c_str()));
+        assert(consensus.hashGenesisBlock == uint256S("0x01d430a9b598f99482c995f7a8463029f98367b86bcab92882a0331e39b47afb"));
         assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
