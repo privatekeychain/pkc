@@ -51,6 +51,26 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
     return CalculateNextWorkRequired(pindexLast, pindexFirst->GetBlockTime(), params);
 }
 
+
+
+// 做了运算后是否小于最小难度
+bool IsOverPowLimit(const arith_uint256 &bnNew, const arith_uint256 &bnPowLimit, int64_t nActualTimespan,
+                    const Consensus::Params &params)
+{
+
+// 因为base_uint的GetHex与SetHex不能兼容其他字节数的类型,所以放弃这种方法
+//    arith_uint512 overflowChecker;
+//    overflowChecker.SetHex(bnNew.GetHex().c_str());
+//
+//    arith_uint512 bnPowLimit512;
+//    bnPowLimit512.SetHex(bnPowLimit.GetHex().c_str());
+//
+//    overflowChecker /= params.nPowTargetTimespan;
+//    overflowChecker *= nActualTimespan;
+//
+//    return overflowChecker > bnPowLimit512;
+}
+
 unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nFirstBlockTime, const Consensus::Params& params)
 {
     if (params.fPowNoRetargeting)
@@ -67,13 +87,25 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nF
     const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);
     arith_uint256 bnNew;
     bnNew.SetCompact(pindexLast->cuckooBits);
-    bnNew *= nActualTimespan;
+
+    // 颠倒换算顺序,减少溢出可能
     bnNew /= params.nPowTargetTimespan;
 
-    if (bnNew > bnPowLimit)
-        bnNew = bnPowLimit;
+    const auto overflowChecker = bnNew;
+    bnNew *= nActualTimespan;
 
-    return bnNew.GetCompact();
+    // 溢出检查
+    if (bnNew < overflowChecker)
+    {
+        return bnPowLimit.GetCompact();
+    }
+    else
+    {
+        if (bnNew > bnPowLimit)
+            bnNew = bnPowLimit;
+
+        return bnNew.GetCompact();
+    }
 }
 
 bool CheckProofOfWorkHashImpl(uint256 hash, unsigned int nBits, const Consensus::Params& params)
