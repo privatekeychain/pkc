@@ -210,7 +210,6 @@ public:
     int32_t nVersion;
     uint256 hashMerkleRoot;
     uint32_t nTime;
-    uint32_t nNonce;
 
     uint32_t cuckooBits;
     uint32_t cuckooNonce;
@@ -241,7 +240,6 @@ public:
         nVersion       = 0;
         hashMerkleRoot = uint256();
         nTime          = 0;
-        nNonce         = 0;
         cuckooBits     = 0;
         cuckooNonce    = 0;
         cuckooNonces.clear();
@@ -411,7 +409,6 @@ public:
         READWRITE(hashPrev);
         READWRITE(hashMerkleRoot);
         READWRITE(nTime);
-        READWRITE(nNonce);
         READWRITE(cuckooBits);
         READWRITE(cuckooNonce);
         READWRITE(cuckooNonces);
