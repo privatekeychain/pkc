@@ -57,7 +57,6 @@ static CUpdatedBlock latestblock;
  */
 double GetDifficulty(const CBlockIndex* blockindex)
 {
-    // PKCTODO GetDifficulty 难度基准是否要改变?
     if (blockindex == nullptr)
     {
         return 1.0;
@@ -155,7 +154,7 @@ UniValue blockToJSON(const CBlock& block, const CBlockIndex* blockindex, bool tx
     result.pushKV("tx", txs);
     result.pushKV("time", block.GetBlockTime());
     result.pushKV("mediantime", (int64_t)blockindex->GetMedianTimePast());
-    result.pushKV("cuckooNonce", (uint64_t)block.cuckooNonce);
+    result.pushKV("nonce", (uint64_t)block.cuckooNonce);
     UniValue cuckooNonces(UniValue::VARR);
     for (size_t i = 0; i < block.cuckooNonces.size(); ++i) {
         cuckooNonces.push_back((uint64_t)block.cuckooNonces[i]);
