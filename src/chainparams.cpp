@@ -186,7 +186,6 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1510704000; // November 15th, 2017.
 
         // The best chain should have at least this much work.
-//        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000028822fef1c230963535a90d");
         // PKCTODO 最长链最小工作量累计
         consensus.nMinimumChainWork = uint256S("0x00");
 
@@ -299,7 +298,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1493596800; // May 1st 2017
 
         // The best chain should have at least this much work.
-        //consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000007dbe94253893cbd463");
+        // PKCTODO 最长链最小工作量累计
         consensus.nMinimumChainWork = uint256S("0x00");
 
         // By default assume that the signatures in ancestors of this block are valid.
@@ -426,12 +425,12 @@ public:
 //        uint32_t cuckooNonceGenesis = 0;
 //        std::vector<word_t> cuckooNoncesGenesis;
 //        std::string hash;
-
+//
 //        PrintGenesisBlockProof(cuckooBits, nVersion, genesisReward, &nTimeGenesis, &cuckooNonceGenesis, &cuckooNoncesGenesis, &hash, consensus);
 
-        const uint32_t nTimeGenesis = 1543926127;
-        const uint32_t cuckooNonceGenesis = 375;
-        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {9205, 17477, 24978, 35146, 45752, 48322, 55422, 58016, 91272, 92850, 94768, 96235, 107284, 129101, 142085, 146088, 150041, 161008, 196245, 202090, 220237, 226137, 238043, 240234, 291619, 300552, 323656, 370350, 372397, 374345, 387312, 390109, 404483, 409123, 429558, 433216, 445532, 453086, 480087, 505620, 508480, 509271};
+        const uint32_t nTimeGenesis = 1544074512;
+        const uint32_t cuckooNonceGenesis = 76;
+        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {15807, 16357, 29493, 32038, 65057, 74501, 74647, 75181, 79621, 84693, 107429, 110807, 117539, 122071, 124704, 145427, 157553, 160774, 179084, 190349, 214718, 216047, 230241, 257308, 268797, 275223, 276636, 289285, 297425, 299086, 305369, 317196, 331745, 341342, 375462, 396327, 396823, 399236, 436247, 472375, 474053, 499434};
 
         genesis = CreateGenesisBlock(nTimeGenesis, cuckooBits, nVersion, genesisReward, cuckooNonceGenesis, cuckooNoncesGenesis);
 
@@ -440,8 +439,8 @@ public:
 //        printf("0x%s\n", BlockMerkleRoot(genesis).GetHex().c_str());
 
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x0bc7f29c628a1a7847a3fadaba70c5a91129bf1636ea41b688bc5a8f114b9b1b"));
-        assert(genesis.hashMerkleRoot == uint256S("0x973218231afdfeb6d2911a8acb1216b3b425c414ddcf81dfb8042f7e52741a42"));
+        assert(consensus.hashGenesisBlock == uint256S("0x5bfa1c76079d83080858912cb93f6b39db79286d8a6b11143495e7eb81a6f224"));
+        assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.
