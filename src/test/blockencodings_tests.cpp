@@ -32,8 +32,7 @@ static CBlock BuildBlockTestCase() {
     block.vtx[0] = MakeTransactionRef(tx);
     block.nVersion = 42;
     block.hashPrevBlock = InsecureRand256();
-    //block.nBits = 0x207fffff;
-    // PKCTODO cuckooBits test
+    block.cuckooBits = 0x207fffff;
 
     tx.vin[0].prevout.hash = InsecureRand256();
     tx.vin[0].prevout.n = 0;
@@ -49,8 +48,13 @@ static CBlock BuildBlockTestCase() {
     bool mutated;
     block.hashMerkleRoot = BlockMerkleRoot(block, &mutated);
     assert(!mutated);
-// PKCTODO TEST CheckProofOfWork
-//    while (!CheckProofOfWork(block.GetHash(), block.nBits, Params().GetConsensus())) ++block.nNonce;
+
+    while (!(FindNewCycle(&block) && CheckProofOfWorkNew(block, Params().GetConsensus())))
+    {
+        ++block.cuckooNonce;
+        block.cuckooNonces.clear();
+    }
+
     return block;
 }
 
@@ -293,14 +297,17 @@ BOOST_AUTO_TEST_CASE(EmptyBlockRoundTripTest)
     block.vtx[0] = MakeTransactionRef(std::move(coinbase));
     block.nVersion = 42;
     block.hashPrevBlock = InsecureRand256();
-    //block.nBits = 0x207fffff;
-    // PKCTODO cuckooBits test
+    block.cuckooBits= 0x207fffff; // 寻找的数字的范围在2 ** 256 中的一半, 也就是ihash两次找到结果
 
     bool mutated;
     block.hashMerkleRoot = BlockMerkleRoot(block, &mutated);
     assert(!mutated);
-// PKCTODO TEST CheckProofOfWork
-//    while (!CheckProofOfWork(block.GetHash(), block.nBits, Params().GetConsensus())) ++block.nNonce;
+
+    while (!(FindNewCycle(&block) && CheckProofOfWorkNew(block,Params().GetConsensus())))
+    {
+        ++block.cuckooNonce;
+        block.cuckooNonces.clear();
+    }
 
     // Test simple header round-trip with only coinbase
     {

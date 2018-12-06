@@ -40,10 +40,12 @@ static CTxIn MineBlock(const CScript& coinbase_scriptPubKey)
 {
     auto block = PrepareBlock(coinbase_scriptPubKey);
 
-// PKCTODO TEST CheckProofOfWork
-//    while (!CheckProofOfWork(block->GetHash(), block->nBits, Params().GetConsensus())) {
-//        assert(++block->nNonce);
-//    }
+
+    while (!(FindNewCycle(&*block) && CheckProofOfWorkNew(*block, Params().GetConsensus())))
+    {
+        assert(++block->cuckooNonce);
+        block->cuckooNonces.clear();
+    }
 
     bool processed{ProcessNewBlock(Params(), block, true, nullptr)};
     assert(processed);
