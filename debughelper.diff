@@ -22,17 +22,3 @@ index 44ca821a2..ef2baec58 100644
  fi
  
  if test x$use_lcov_branch != xno; then
-diff --git a/src/bitcoind.cpp b/src/bitcoind.cpp
-index 06f862242..b7ce9e674 100644
---- a/src/bitcoind.cpp
-+++ b/src/bitcoind.cpp
-@@ -183,6 +183,9 @@ static bool AppInit(int argc, char* argv[])
- 
- int main(int argc, char* argv[])
- {
-+    char buf[100] = {};
-+    fgets(buf , 80, stdin);
-+
-     SetupEnvironment();
- 
-     // Connect bitcoind signal handlers
