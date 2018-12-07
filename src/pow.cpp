@@ -70,7 +70,7 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nF
     arith_uint256 bnNew;
     bnNew.SetCompact(pindexLast->cuckooBits);
 
-    // 颠倒换算顺序,减少溢出可能
+    // 颠倒换算顺序,减少向左溢出可能 (不考虑向右溢出,因为难度不会那么小)
     bnNew /= params.nPowTargetTimespan;
 
     const auto overflowChecker = bnNew;
