@@ -69,25 +69,13 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nF
     const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);
     arith_uint256 bnNew;
     bnNew.SetCompact(pindexLast->cuckooBits);
-
-    // 颠倒换算顺序,减少向左溢出可能 (不考虑向右溢出,因为难度不会那么小)
+    bnNew *= nActualTimespan;
     bnNew /= params.nPowTargetTimespan;
 
-    const auto overflowChecker = bnNew;
-    bnNew *= nActualTimespan;
+    if (bnNew > bnPowLimit)
+        bnNew = bnPowLimit;
 
-    // 溢出检查
-    if (bnNew < overflowChecker)
-    {
-        return bnPowLimit.GetCompact();
-    }
-    else
-    {
-        if (bnNew > bnPowLimit)
-            bnNew = bnPowLimit;
-
-        return bnNew.GetCompact();
-    }
+    return bnNew.GetCompact();
 }
 
 bool CheckProofOfWorkHashImpl(uint256 hash, unsigned int nBits, const Consensus::Params& params)
