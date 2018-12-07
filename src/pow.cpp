@@ -53,6 +53,22 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
 
 
 
+bool IsOverPowLimit(const arith_uint256 &bnNew, const arith_uint256 &bnPowLimit, int64_t nActualTimespan,
+                    const Consensus::Params &params)
+{
+    arith_uint512 overflowChecker;
+    overflowChecker.SetHex(bnNew.GetHex().c_str());
+
+    arith_uint512 bnPowLimit512;
+    bnPowLimit512.SetHex(bnPowLimit.GetHex().c_str());
+
+    overflowChecker *= nActualTimespan;
+    overflowChecker /= params.nPowTargetTimespan;
+
+    return overflowChecker > bnPowLimit512;
+}
+
+
 unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nFirstBlockTime, const Consensus::Params& params)
 {
     if (params.fPowNoRetargeting)
@@ -69,9 +85,22 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nF
     const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);
     arith_uint256 bnNew;
     bnNew.SetCompact(pindexLast->cuckooBits);
-    bnNew *= nActualTimespan;
-    bnNew /= params.nPowTargetTimespan;
 
+    arith_uint512 bnNew512;
+    bnNew512.SetHex(bnNew.GetHex().c_str());
+
+    arith_uint512 bnPowLimit512;
+    bnPowLimit512.SetHex(bnPowLimit.GetHex().c_str());
+
+    bnNew512 *= nActualTimespan;
+    bnNew512 /= params.nPowTargetTimespan;
+
+    if (bnNew512 > bnPowLimit512)
+        return bnPowLimit.GetCompact();
+
+    bnNew.SetHex(bnNew512.GetHex());
+
+    // will not be executed
     if (bnNew > bnPowLimit)
         bnNew = bnPowLimit;
 

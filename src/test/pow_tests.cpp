@@ -20,7 +20,7 @@ BOOST_AUTO_TEST_CASE(get_next_work)
     int64_t nLastRetargetTime = 1261130161; // Block #30240
     CBlockIndex pindexLast;
     pindexLast.nHeight = 32255;
-    pindexLast.nTime = 1262152739;  // Block #32255
+    pindexLast.nTime = 1262152739;  // Block #32255  // 1022578 s  11 day
     pindexLast.cuckooBits = 0x1d00ffff;
     BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), 0x1d03fffc);
 }
@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE(get_next_work_upper_limit_actual)
     pindexLast.nHeight = 46367;
     pindexLast.nTime = 1269211443;  // Block #46367
     pindexLast.cuckooBits = 0x1c387f6f;
-    BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), 0x1d00e1fdU);
+    BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), 0x1d00e1fd);
 }
 
 BOOST_AUTO_TEST_CASE(GetBlockProofEquivalentTime_test)
@@ -82,5 +82,73 @@ BOOST_AUTO_TEST_CASE(GetBlockProofEquivalentTime_test)
         BOOST_CHECK_EQUAL(tdiff, p1->GetBlockTime() - p2->GetBlockTime());
     }
 }
+
+
+BOOST_AUTO_TEST_CASE(get_next_work_upper_limit_actual_new1)
+{
+    const auto chainParams = CreateChainParams(CBaseChainParams::MAIN);
+    int64_t nLastRetargetTime = 0;
+    CBlockIndex pindexLast;
+    pindexLast.nHeight = 0;
+    pindexLast.nTime = 86400;  // 1 day
+    pindexLast.cuckooBits = 0x207fffff;
+    BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), 0x207fffff);
+}
+
+BOOST_AUTO_TEST_CASE(get_next_work_upper_limit_actual_new2)
+{
+    const auto chainParams = CreateChainParams(CBaseChainParams::MAIN);
+    int64_t nLastRetargetTime = 0;
+    CBlockIndex pindexLast;
+    pindexLast.nHeight = 0;
+    pindexLast.nTime = 172800;  // 2 day
+    pindexLast.cuckooBits = 0x207fffff;
+    BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), 0x207fffff);
+}
+
+BOOST_AUTO_TEST_CASE(get_next_work_upper_limit_actual_new3)
+{
+    const auto chainParams = CreateChainParams(CBaseChainParams::MAIN);
+    int64_t nLastRetargetTime = 0;
+    CBlockIndex pindexLast;
+    pindexLast.nHeight = 0;
+    pindexLast.nTime = 691200;  // 8 day
+    pindexLast.cuckooBits = 0x207fffff;
+    BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), 0x207fffff);
+}
+
+BOOST_AUTO_TEST_CASE(get_next_work_upper_limit_actual_new4)
+{
+    const auto chainParams = CreateChainParams(CBaseChainParams::MAIN);
+    int64_t nLastRetargetTime = 0;
+    CBlockIndex pindexLast;
+    pindexLast.nHeight = 0;
+    pindexLast.nTime = 43200;  // 0.5
+    pindexLast.cuckooBits = 0x207fffff;
+    BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), 0x203fffff);
+}
+
+BOOST_AUTO_TEST_CASE(get_next_work_upper_limit_actual_new5)
+{
+    const auto chainParams = CreateChainParams(CBaseChainParams::MAIN);
+    int64_t nLastRetargetTime = 0;
+    CBlockIndex pindexLast;
+    pindexLast.nHeight = 0;
+    pindexLast.nTime = 21600;  // 1/4 day
+    pindexLast.cuckooBits = 0x207fffff;
+    BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), 0x201fffff);
+}
+
+BOOST_AUTO_TEST_CASE(get_next_work_upper_limit_actual_new6)
+{
+    const auto chainParams = CreateChainParams(CBaseChainParams::MAIN);
+    int64_t nLastRetargetTime = 0;
+    CBlockIndex pindexLast;
+    pindexLast.nHeight = 0;
+    pindexLast.nTime = 5400;  // 1/16 day
+    pindexLast.cuckooBits = 0x207fffff;
+    BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), 0x201fffff);
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()

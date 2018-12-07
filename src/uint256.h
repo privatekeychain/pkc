@@ -156,4 +156,26 @@ inline uint256 uint256S(const std::string& str)
     return rv;
 }
 
+
+class uint512: public base_blob<512> {
+public:
+    uint512() {}
+
+    explicit uint512(const std::vector<unsigned char>& vch) : base_blob<512>(vch) {}
+};
+
+inline uint512 uint512S(const char* str)
+{
+    uint512 rv;
+    rv.SetHex(str);
+    return rv;
+}
+
+inline uint512 uint512S(const std::string& str)
+{
+    uint512 rv;
+    rv.SetHex(str);
+    return rv;
+}
+
 #endif // BITCOIN_UINT256_H
