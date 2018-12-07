@@ -159,8 +159,13 @@ bool CheckProofOfWorkNew(const CBlockHeader &blockHeader, const Consensus::Param
     std::string headerHash = GetHeaderHashFromBlock(blockHeader);
     std::string headerHashWithCuckooNonce = PlaceNonceAtEndOfHeaderHash(headerHash, blockHeader.cuckooNonce);
     bool cuckooFinded = CheckProofOfWorkCuckooCycleImpl(headerHashWithCuckooNonce, blockHeader.cuckooNonces);
-    bool hashVerified = CheckProofOfWorkHashImpl(blockHeader.GetHash(), blockHeader.cuckooBits, params);
-    return cuckooFinded && hashVerified;
+
+    if (cuckooFinded) {
+        return CheckProofOfWorkHashImpl(blockHeader.GetHash(), blockHeader.cuckooBits, params);
+    }
+    else {
+        return false;
+    }
 }
 
 bool FindNewCycle(CBlockHeader *blockHeader)
