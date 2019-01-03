@@ -148,11 +148,11 @@ public:
     CMainParams() {
         strNetworkID = "main";
         consensus.nSubsidyHalvingInterval = 525600;  // 减半周期(1年)
-        consensus.BIP16Exception = uint256S("0x00000000000002dc756eebf4f49723ed8d30cc28a5f108eb94b1ba88ac4f9c22");
-        consensus.BIP34Height = 227931;
-        consensus.BIP34Hash = uint256S("0x000000000000024b89b42a942fe0d9fea3bb44ab7bd1b19115dd6a759c0808b8");
-        consensus.BIP65Height = 388381; // 000000000000000004c2b624ed5d7756c508d90fd0da2c7c679febfa6c4735f0
-        consensus.BIP66Height = 363725; // 00000000000000000379eaa19dce8c9b722d46ae6a57c2f1a988119488b50931
+        consensus.BIP16Exception = uint256();
+        consensus.BIP34Height = 0;
+        consensus.BIP34Hash = uint256();
+        consensus.BIP65Height = 0;
+        consensus.BIP66Height = 0;
         consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespan =  60 * 60 * 24; // 调整难度时间(1天)
         consensus.nPowTargetSpacing = 60; // 出块时间(1分)
@@ -161,18 +161,18 @@ public:
         consensus.nRuleChangeActivationThreshold = 19152; // 95% of 20160
         consensus.nMinerConfirmationWindow = 20160;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
-        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
-        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
+        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = Consensus::BIP9Deployment::ALWAYS_ACTIVE;
+        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout =  Consensus::BIP9Deployment::NO_TIMEOUT;
 
         // Deployment of BIP68, BIP112, and BIP113.
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
-        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = 1462060800; // May 1st, 2016
-        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 1493596800; // May 1st, 2017
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = Consensus::BIP9Deployment::ALWAYS_ACTIVE;
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout =  Consensus::BIP9Deployment::NO_TIMEOUT;
 
         // Deployment of SegWit (BIP141, BIP143, and BIP147)
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].bit = 1;
-        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nStartTime = 1479168000; // November 15th, 2016.
-        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1510704000; // November 15th, 2017.
+        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nStartTime = Consensus::BIP9Deployment::ALWAYS_ACTIVE;
+        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout =  Consensus::BIP9Deployment::NO_TIMEOUT;
 
         // The best chain should have at least this much work.
         // PKCTODO 最长链最小工作量累计
@@ -251,11 +251,11 @@ public:
     CTestNetParams() {
         strNetworkID = "test";
         consensus.nSubsidyHalvingInterval = 525600; // 减半周期(1年)
-        consensus.BIP16Exception = uint256S("0x00000000dd30457c001f4095d208cc1296b0eed002427aa599874af7a432b105");
-        consensus.BIP34Height = 21111;
-        consensus.BIP34Hash = uint256S("0x0000000023b3a96d3484e5abb3755c413e7d41500f8e2a5c3f0dd01299cd8ef8");
-        consensus.BIP65Height = 581885; // 00000000007f6655f22f98e72ed80d8b06dc761d5da09df0fa1dc4be4f861eb6
-        consensus.BIP66Height = 330776; // 000000002104c8c45e99a8853285a3b592602a3ccde2b832481da85e9e4ba182
+        consensus.BIP16Exception = uint256();
+        consensus.BIP34Height = 0;
+        consensus.BIP34Hash = uint256();
+        consensus.BIP65Height = 0;
+        consensus.BIP66Height = 0;
         consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespan =   60 * 60 * 24; // 调整难度时间(1天)
         consensus.nPowTargetSpacing = 60; // 出块时间(1分)
@@ -264,18 +264,18 @@ public:
         consensus.nRuleChangeActivationThreshold = 19152; // 95% of 20160
         consensus.nMinerConfirmationWindow = 20160;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
-        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
-        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
+        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = Consensus::BIP9Deployment::ALWAYS_ACTIVE;
+        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout =  Consensus::BIP9Deployment::NO_TIMEOUT;
 
         // Deployment of BIP68, BIP112, and BIP113.
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
-        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = 1456790400; // March 1st, 2016
-        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 1493596800; // May 1st, 2017
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = Consensus::BIP9Deployment::ALWAYS_ACTIVE;
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout =  Consensus::BIP9Deployment::NO_TIMEOUT;
 
         // Deployment of SegWit (BIP141, BIP143, and BIP147)
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].bit = 1;
-        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nStartTime = 1462060800; // May 1st 2016
-        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1493596800; // May 1st 2017
+        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nStartTime = Consensus::BIP9Deployment::ALWAYS_ACTIVE;
+        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout =  Consensus::BIP9Deployment::NO_TIMEOUT;
 
         // The best chain should have at least this much work.
         // PKCTODO 最长链最小工作量累计
