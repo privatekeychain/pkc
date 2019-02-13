@@ -1841,11 +1841,8 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
     // Special case for the genesis block, skipping connection of its transactions
     // (its coinbase is unspendable)
     if (block.GetHash() == chainparams.GetConsensus().hashGenesisBlock) {
-        if (!fJustCheck) {
-            CTxUndo txundo;
-            UpdateCoins(*(block.vtx[0]), view, txundo, pindex->nHeight);
+        if (!fJustCheck)
             view.SetBestBlock(pindex->GetBlockHash());
-        }
         return true;
     }
 
