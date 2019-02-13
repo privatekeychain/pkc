@@ -196,19 +196,19 @@ public:
 
         const uint32_t cuckooBits = 0x207fffff;
         const int32_t nVersion = 1;
-        const CAmount genesisReward = 500000000 * COIN + 500 * COIN;
-
+        const CAmount genesisReward = 500 * COIN;
 
 //        PrintGenesisBlockProof("1", cuckooBits, nVersion, genesisReward, consensus);
 
-        const uint32_t nTimeGenesis = 1546510626;
-        const uint32_t cuckooNonceGenesis = 95;
-        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {9308, 13410, 19936, 25233, 36405, 40766, 41653, 58015, 67731, 67954, 84952, 90469, 94157, 115893, 121134, 144877, 174768, 177389, 203481, 227682, 235996, 237453, 255357, 289909, 298683, 350815, 364575, 387678, 401276, 412566, 414856, 418343, 425533, 458872, 461022, 461379, 468875, 487650, 494539, 499829, 500939, 507169};
+        const uint32_t nTimeGenesis = 1550049163;
+        const uint32_t cuckooNonceGenesis = 29;
+        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {3154, 4417, 8595, 14075, 28411, 47067, 64777, 78822, 82289, 87662, 91933, 94487, 111721, 126103, 127222, 130566, 134010, 135428, 159152, 164146, 191110, 193847, 195837, 226205, 242993, 251202, 254405, 271363, 282005, 329389, 338900, 348545, 386684, 390397, 404470, 412034, 421995, 428645, 434367, 440977, 454774, 465766};
+
         genesis = CreateGenesisBlock(nTimeGenesis, cuckooBits, nVersion, genesisReward, cuckooNonceGenesis, cuckooNoncesGenesis);
 
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x1411465213975a714e3f1016521d9ee1c8b009c88c2389944a835dff4528a9aa"));
-        assert(genesis.hashMerkleRoot == uint256S("0x287e1eefaf08b141a070883511d3a3bf69e827b78f54674ab7a74d2898b0df62"));
+        assert(consensus.hashGenesisBlock == uint256S("0x49e9204ebe3c41ac0f2d5936b5d6ca39b17c72ea3bdd26d66d5131b19063e811"));
+        assert(genesis.hashMerkleRoot == uint256S("0x9fe0b536754a727c4851a12b3f2d7132c60daea5cd5c13997b71b5f904e431b5"));
 
         vSeeds.emplace_back("seed.pkc.ink");
 
@@ -293,19 +293,19 @@ public:
 
         const uint32_t cuckooBits = 0x207fffff;
         const int32_t nVersion = 1;
-        const CAmount genesisReward = 500000000 * COIN + 500 * COIN;
+        const CAmount genesisReward = 500 * COIN;
 
 //       PrintGenesisBlockProof("2", cuckooBits, nVersion, genesisReward, consensus);
 
-        const uint32_t nTimeGenesis = 1546510634;
-        const uint32_t cuckooNonceGenesis = 24;
-        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {3406, 9830, 16650, 64174, 66628, 75869, 81993, 87682, 94993, 99979, 101598, 108217, 110114, 124574, 125519, 126521, 150267, 159433, 159733, 178792, 209180, 223384, 227773, 232350, 267742, 273092, 273806, 274076, 281137, 299300, 300851, 308925, 314035, 333190, 335836, 361252, 414015, 419014, 492573, 512376, 521182, 523941};
+        const uint32_t nTimeGenesis = 1550049165;
+        const uint32_t cuckooNonceGenesis = 114;
+        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {22369, 27328, 27777, 60456, 87523, 88956, 119440, 121089, 147827, 155406, 161258, 167642, 186390, 188102, 191386, 200445, 204480, 218256, 230100, 258650, 286622, 309226, 309793, 330501, 332999, 343959, 349721, 357201, 383655, 397288, 401613, 411954, 412643, 426833, 444859, 452838, 461180, 464621, 491975, 498913, 503899, 505474};
 
         genesis = CreateGenesisBlock(nTimeGenesis, cuckooBits, nVersion, genesisReward, cuckooNonceGenesis, cuckooNoncesGenesis);
 
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x7b126aa76a93648bccddad13b9e4f5dcaa58744d366179697b3d97010d1781e4"));
-        assert(genesis.hashMerkleRoot == uint256S("0x287e1eefaf08b141a070883511d3a3bf69e827b78f54674ab7a74d2898b0df62"));
+        assert(consensus.hashGenesisBlock == uint256S("0x5a2e444f2838490791c4594c4b08c6d02b149bb9b8cc619546edb21863a825c6"));
+        assert(genesis.hashMerkleRoot == uint256S("0x9fe0b536754a727c4851a12b3f2d7132c60daea5cd5c13997b71b5f904e431b5"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -390,19 +390,19 @@ public:
 
         const uint32_t cuckooBits = 0x207fffff;
         const int32_t nVersion = 1;
-        const CAmount genesisReward = 50 * COIN;
+        const CAmount genesisReward = 500 * COIN;
 
 //        PrintGenesisBlockProof("3", cuckooBits, nVersion, genesisReward, consensus);
 
-        const uint32_t nTimeGenesis = 1546510637;
-        const uint32_t cuckooNonceGenesis = 168;
-        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {25240, 32864, 36169, 51452, 51944, 82873, 84548, 88685, 92754, 93550, 96909, 99727, 118188, 143795, 228952, 229438, 233742, 243235, 257101, 275277, 284322, 313723, 313986, 327737, 329757, 362382, 365348, 367570, 375398, 405642, 406022, 439039, 441869, 443010, 446587, 458764, 459625, 464192, 482473, 488806, 497199, 508362};
+        const uint32_t nTimeGenesis = 1550049170;
+        const uint32_t cuckooNonceGenesis = 13;
+        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {31916, 32346, 47800, 59131, 80360, 81797, 114392, 141815, 155547, 160742, 178759, 186438, 192307, 197250, 222851, 225748, 236071, 255992, 300870, 311221, 314295, 323476, 338133, 338867, 340872, 341562, 344353, 348477, 366861, 376903, 416404, 420993, 453609, 456032, 469836, 481399, 487667, 500982, 502183, 510541, 521399, 521701};
 
         genesis = CreateGenesisBlock(nTimeGenesis, cuckooBits, nVersion, genesisReward, cuckooNonceGenesis, cuckooNoncesGenesis);
 
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x445d08a6dbc4bb668b3dfb23241f67686cc6a18cd33e57df259aa909a2125507"));
-        assert(genesis.hashMerkleRoot == uint256S("0x892aabb9cd8faaefb95746a6a2af5c76c8178d653c7838c2f8fa3ad3cdd0a083"));
+        assert(consensus.hashGenesisBlock == uint256S("0x376a3698d64cab96e708b4114a542ce8541bbf53b1f3b308ebfacc26a2f6de96"));
+        assert(genesis.hashMerkleRoot == uint256S("0x9fe0b536754a727c4851a12b3f2d7132c60daea5cd5c13997b71b5f904e431b5"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.
