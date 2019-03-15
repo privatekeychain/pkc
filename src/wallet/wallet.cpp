@@ -3739,6 +3739,21 @@ void CWallet::GetScriptForMining(std::shared_ptr<CReserveScript> &script)
     script->reserveScript = CScript() << OP_DUP << OP_HASH160 << ToByteVector(pubkeyHash) << OP_EQUALVERIFY << OP_CHECKSIG;
 }
 
+void CWallet::GetScriptForMiningP2PKH(std::shared_ptr<CReserveScript> &script)
+{
+    std::shared_ptr<CReserveKey> rKey = std::make_shared<CReserveKey>(this);
+    CPubKey pubkey;
+    if (!rKey->GetReservedKey(pubkey))
+        return;
+
+    script = rKey;
+
+    uint160 pubkeyHash;
+    CHash160().Write(pubkey.begin(), pubkey.size()).Finalize(pubkeyHash.begin());
+    script->reserveScript = CScript() << OP_DUP << OP_HASH160 << ToByteVector(pubkeyHash) << OP_EQUALVERIFY << OP_CHECKSIG;
+}
+
+
 void CWallet::LockCoin(const COutPoint& output)
 {
     AssertLockHeld(cs_wallet); // setLockedCoins
