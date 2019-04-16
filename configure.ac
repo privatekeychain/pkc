@@ -249,8 +249,8 @@ if test "x$enable_debug" = xyes; then
   fi
   # Prefer -Og, fall back to -O0 if that is unavailable.
   AX_CHECK_COMPILE_FLAG(
-    [-Og],
-    [[DEBUG_CXXFLAGS="$DEBUG_CXXFLAGS -Og"]],
+    [-O0],
+    [[DEBUG_CXXFLAGS="$DEBUG_CXXFLAGS -O0"]],
     [AX_CHECK_COMPILE_FLAG([-O0],[[DEBUG_CXXFLAGS="$DEBUG_CXXFLAGS -O0"]],,[[$CXXFLAG_WERROR]])],
     [[$CXXFLAG_WERROR]])
 
@@ -608,7 +608,7 @@ if test x$use_lcov = xyes; then
   AX_CHECK_COMPILE_FLAG([--coverage],[CXXFLAGS="$CXXFLAGS --coverage"],
     [AC_MSG_ERROR("lcov testing requested but --coverage flag does not work")])
   AC_DEFINE(USE_COVERAGE, 1, [Define this symbol if coverage is enabled])
-  CXXFLAGS="$CXXFLAGS -Og"
+  CXXFLAGS="$CXXFLAGS -O0"
 fi
 
 if test x$use_lcov_branch != xno; then
