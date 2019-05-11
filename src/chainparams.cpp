@@ -200,17 +200,17 @@ public:
 
 //        PrintGenesisBlockProof("1", cuckooBits, nVersion, genesisReward, consensus);
 
-        const uint32_t nTimeGenesis = 1550049163;
-        const uint32_t cuckooNonceGenesis = 29;
-        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {3154, 4417, 8595, 14075, 28411, 47067, 64777, 78822, 82289, 87662, 91933, 94487, 111721, 126103, 127222, 130566, 134010, 135428, 159152, 164146, 191110, 193847, 195837, 226205, 242993, 251202, 254405, 271363, 282005, 329389, 338900, 348545, 386684, 390397, 404470, 412034, 421995, 428645, 434367, 440977, 454774, 465766};
+        const uint32_t nTimeGenesis = 1557556046;
+        const uint32_t cuckooNonceGenesis = 44;
+        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {713, 4521, 43983, 75423, 83678, 85167, 89369, 105178, 119501, 121065, 140496, 157978, 160386, 169442, 186106, 195736, 211827, 220112, 229172, 246953, 259640, 281974, 283584, 294185, 319785, 331983, 332062, 364241, 370005, 375618, 405825, 417482, 425970, 444100, 446536, 462111, 491401, 508984, 514275, 514853, 516943, 521813};
 
         genesis = CreateGenesisBlock(nTimeGenesis, cuckooBits, nVersion, genesisReward, cuckooNonceGenesis, cuckooNoncesGenesis);
 
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x49e9204ebe3c41ac0f2d5936b5d6ca39b17c72ea3bdd26d66d5131b19063e811"));
+        assert(consensus.hashGenesisBlock == uint256S("0xae21b3003f542a7d6096d8d76c1e930bb01fb01f658036abc3b6db0b5f3fdd8f"));
         assert(genesis.hashMerkleRoot == uint256S("0x9fe0b536754a727c4851a12b3f2d7132c60daea5cd5c13997b71b5f904e431b5"));
 
-        vSeeds.emplace_back("seed.pkc.ink");
+//        vSeeds.emplace_back("seed.pkc.ink");
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 55); // P
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 28); // C
@@ -297,20 +297,20 @@ public:
 
 //       PrintGenesisBlockProof("2", cuckooBits, nVersion, genesisReward, consensus);
 
-        const uint32_t nTimeGenesis = 1550049165;
-        const uint32_t cuckooNonceGenesis = 114;
-        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {22369, 27328, 27777, 60456, 87523, 88956, 119440, 121089, 147827, 155406, 161258, 167642, 186390, 188102, 191386, 200445, 204480, 218256, 230100, 258650, 286622, 309226, 309793, 330501, 332999, 343959, 349721, 357201, 383655, 397288, 401613, 411954, 412643, 426833, 444859, 452838, 461180, 464621, 491975, 498913, 503899, 505474};
+        const uint32_t nTimeGenesis = 1557556055;
+        const uint32_t cuckooNonceGenesis = 33;
+        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {22164, 37012, 51661, 86871, 111953, 116289, 122969, 135120, 142922, 148905, 151779, 188757, 192383, 206731, 218353, 220514, 236261, 264800, 287192, 290512, 303584, 314599, 337080, 349515, 350551, 354604, 355069, 375524, 379631, 385280, 391604, 413583, 416577, 418368, 432804, 445656, 468548, 469086, 470705, 496015, 507936, 521134};
 
         genesis = CreateGenesisBlock(nTimeGenesis, cuckooBits, nVersion, genesisReward, cuckooNonceGenesis, cuckooNoncesGenesis);
 
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x5a2e444f2838490791c4594c4b08c6d02b149bb9b8cc619546edb21863a825c6"));
+        assert(consensus.hashGenesisBlock == uint256S("0x8fdd03229aa8f8fcc4d0c7f456dc934cd11d85f4dd6ae93878c747b97f32866f"));
         assert(genesis.hashMerkleRoot == uint256S("0x9fe0b536754a727c4851a12b3f2d7132c60daea5cd5c13997b71b5f904e431b5"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
 
-        vSeeds.emplace_back("seed.pkc.ink");
+//        vSeeds.emplace_back("seed.pkc.ink");
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,111); // m or n
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,196); // 2
@@ -394,14 +394,14 @@ public:
 
 //        PrintGenesisBlockProof("3", cuckooBits, nVersion, genesisReward, consensus);
 
-        const uint32_t nTimeGenesis = 1550049170;
-        const uint32_t cuckooNonceGenesis = 13;
-        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {31916, 32346, 47800, 59131, 80360, 81797, 114392, 141815, 155547, 160742, 178759, 186438, 192307, 197250, 222851, 225748, 236071, 255992, 300870, 311221, 314295, 323476, 338133, 338867, 340872, 341562, 344353, 348477, 366861, 376903, 416404, 420993, 453609, 456032, 469836, 481399, 487667, 500982, 502183, 510541, 521399, 521701};
+        const uint32_t nTimeGenesis = 1557556061;
+        const uint32_t cuckooNonceGenesis = 2;
+        const std::vector<word_t> cuckooNoncesGenesis = std::vector<word_t> {3014, 18868, 27817, 63333, 77165, 108793, 145806, 150275, 153726, 182876, 196489, 209833, 227412, 227458, 240096, 248775, 262157, 264259, 286305, 301608, 302056, 303575, 317545, 318145, 322697, 344052, 346797, 353031, 382145, 405473, 407432, 418413, 426742, 431878, 436330, 440698, 442330, 443189, 448121, 459471, 494359, 512571};
 
         genesis = CreateGenesisBlock(nTimeGenesis, cuckooBits, nVersion, genesisReward, cuckooNonceGenesis, cuckooNoncesGenesis);
 
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x376a3698d64cab96e708b4114a542ce8541bbf53b1f3b308ebfacc26a2f6de96"));
+        assert(consensus.hashGenesisBlock == uint256S("0x398a513efee75bdba8217d4e3d7f0a3186026ab3efbdf21c5fb3e47acf3d1680"));
         assert(genesis.hashMerkleRoot == uint256S("0x9fe0b536754a727c4851a12b3f2d7132c60daea5cd5c13997b71b5f904e431b5"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.

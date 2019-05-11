@@ -109,6 +109,20 @@ bool CheckProofOfWorkHashImpl(uint256 hash, unsigned int nBits, const Consensus:
     return true;
 }
 
+uint256 GetHeaderHashFromBlockUint256(const CBlockHeader& blockHeader)
+{
+    std::vector<unsigned char> serializedHeader;
+    CVectorWriter(SER_NETWORK, INIT_PROTO_VERSION, serializedHeader, 0, blockHeader);
+
+    const size_t headerSize = 80;
+
+    serializedHeader.resize(headerSize);
+
+    uint256 hash;
+    CSHA256().Write(serializedHeader.data(), headerSize).Finalize((unsigned char*)&hash);
+    return hash;
+}
+
 std::string GetHeaderHashFromBlock(const CBlockHeader &blockHeader)
 {
     std::vector<unsigned char> serializedHeader;
@@ -161,9 +175,9 @@ bool CheckProofOfWorkNew(const CBlockHeader &blockHeader, const Consensus::Param
     bool cuckooFinded = CheckProofOfWorkCuckooCycleImpl(headerHashWithCuckooNonce, blockHeader.cuckooNonces);
 
     if (cuckooFinded) {
-        return CheckProofOfWorkHashImpl(blockHeader.GetHash(), blockHeader.cuckooBits, params);
-    }
-    else {
+        auto hash = GetHeaderHashFromBlockUint256(blockHeader);
+        return CheckProofOfWorkHashImpl(hash, blockHeader.cuckooBits, params);
+    } else {
         return false;
     }
 }
