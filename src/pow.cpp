@@ -112,7 +112,7 @@ bool CheckProofOfWorkHashImpl(uint256 hash, unsigned int nBits, const Consensus:
 uint256 GetHeaderHashFromBlockUint256(const CBlockHeader& blockHeader)
 {
     std::vector<unsigned char> serializedHeader;
-    CVectorWriter(SER_NETWORK, INIT_PROTO_VERSION, serializedHeader, 0, blockHeader);
+    CVectorWriter(SER_GETHASH, INIT_PROTO_VERSION, serializedHeader, 0, blockHeader);
 
     const size_t headerSize = 80;
 
@@ -126,7 +126,7 @@ uint256 GetHeaderHashFromBlockUint256(const CBlockHeader& blockHeader)
 std::string GetHeaderHashFromBlock(const CBlockHeader &blockHeader)
 {
     std::vector<unsigned char> serializedHeader;
-    CVectorWriter(SER_NETWORK, INIT_PROTO_VERSION, serializedHeader, 0, blockHeader);
+    CVectorWriter(SER_GETHASH, INIT_PROTO_VERSION, serializedHeader, 0, blockHeader);
 
     // std::vector<word_t> cuckooNonces; cuckoo cycle解不算在header内
 
