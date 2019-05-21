@@ -212,8 +212,6 @@ public:
 
 //        vSeeds.emplace_back("seed.pkc.ink");
 
-        vSeeds.emplace_back("127.0.0.1");
-
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 55); // P
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 28); // C
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,128); // 5, K, L
