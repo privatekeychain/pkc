@@ -17,12 +17,10 @@ RUN set -ex; \
     rm -rf /var/lib/apt/lists/*; \
     mkdir -p /tmp/pkc;
 
-COPY ./latest.tar.gz /tmp/pkc
+COPY . /tmp/pkc
 
 RUN set -ex; \
     cd /tmp/pkc; \
-    tar -xvzf latest.tar.gz; \
-    rm -rf latest.tar.gz; \
     ./autogen.sh; \
     ./configure --without-gui --without-miniupnpc; \
     make -j ${BUILD_JOBS}; \
