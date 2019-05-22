@@ -14,8 +14,7 @@ RUN set -ex; \
     apt-get update; \
     apt-get install libdb4.8-dev libdb4.8++-dev -y; \
     apt-get install apache2-utils -y; \
-    rm -rf /var/lib/apt/lists/*; \
-    mkdir -p /tmp/pkc;
+    rm -rf /var/lib/apt/lists/*;
 
 COPY . /tmp/pkc
 
