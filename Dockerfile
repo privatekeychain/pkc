@@ -23,7 +23,8 @@ RUN set -ex; \
     ./autogen.sh; \
     ./configure --without-gui --without-miniupnpc; \
     make -j ${BUILD_JOBS}; \
-    make install;
+    make install; \
+    make clean;
     # cd /env; \
     # rm -rf /env/pkc;
 
