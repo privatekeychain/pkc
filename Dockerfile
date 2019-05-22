@@ -16,17 +16,18 @@ RUN set -ex; \
     apt-get install apache2-utils -y; \
     rm -rf /var/lib/apt/lists/*;
 
-COPY . /tmp/pkc
+COPY . /env/pkc
 
 RUN set -ex; \
-    cd /tmp/pkc; \
+    cd /env/pkc; \
     ./autogen.sh; \
     ./configure --without-gui --without-miniupnpc; \
     make -j ${BUILD_JOBS}; \
-    make install; \
-    cd /tmp; \
-    rm -rf /tmp/pkc;
+    make install;
+    # cd /env; \
+    # rm -rf /env/pkc;
 
+# 源码保留,矿池源码链接
 # CMD bitcoind
 
 # mainnet: 9332 rpc , 9333 p2p , 8331 zeromq
