@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(src)
 include_directories(src/bench)
 include_directories(src/compat)
+include_directories(src/config)
 include_directories(src/consensus)
 include_directories(src/crypto)
 include_directories(src/crypto/ctaes)
@@ -22,6 +23,7 @@ include_directories(src/leveldb/port)
 include_directories(src/leveldb/port/win)
 include_directories(src/leveldb/table)
 include_directories(src/leveldb/util)
+include_directories(src/obj)
 include_directories(src/policy)
 include_directories(src/primitives)
 include_directories(src/qt)
@@ -38,6 +40,7 @@ include_directories(src/secp256k1/src/modules/recovery)
 include_directories(src/support)
 include_directories(src/support/allocators)
 include_directories(src/test)
+include_directories(src/univalue)
 include_directories(src/univalue/include)
 include_directories(src/univalue/lib)
 include_directories(src/wallet)
@@ -70,6 +73,7 @@ add_executable(pkc
         src/compat/glibcxx_sanity.cpp
         src/compat/sanity.h
         src/compat/strnlen.cpp
+        src/config/bitcoin-config.h
         src/consensus/consensus.h
         src/consensus/merkle.cpp
         src/consensus/merkle.h
@@ -255,6 +259,7 @@ add_executable(pkc
         src/leveldb/util/testharness.h
         src/leveldb/util/testutil.cc
         src/leveldb/util/testutil.h
+        src/obj/build.h
         src/policy/feerate.cpp
         src/policy/feerate.h
         src/policy/fees.cpp
@@ -456,6 +461,7 @@ add_executable(pkc
         src/secp256k1/src/ecmult_gen.h
         src/secp256k1/src/ecmult_gen_impl.h
         src/secp256k1/src/ecmult_impl.h
+        src/secp256k1/src/ecmult_static_context.h
         src/secp256k1/src/field.h
         src/secp256k1/src/field_10x26.h
         src/secp256k1/src/field_10x26_impl.h
@@ -469,6 +475,7 @@ add_executable(pkc
         src/secp256k1/src/group_impl.h
         src/secp256k1/src/hash.h
         src/secp256k1/src/hash_impl.h
+        src/secp256k1/src/libsecp256k1-config.h
         src/secp256k1/src/num.h
         src/secp256k1/src/num_gmp.h
         src/secp256k1/src/num_gmp_impl.h
@@ -574,6 +581,7 @@ add_executable(pkc
         src/univalue/test/object.cpp
         src/univalue/test/test_json.cpp
         src/univalue/test/unitester.cpp
+        src/univalue/univalue-config.h
         src/wallet/test/accounting_tests.cpp
         src/wallet/test/coinselector_tests.cpp
         src/wallet/test/psbt_wallet_tests.cpp
