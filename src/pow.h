@@ -26,5 +26,8 @@ bool CheckProofOfWorkNew(const CBlockHeader &blockHeader, const Consensus::Param
 
 bool FindNewCycle(CBlockHeader *blockHeader);
 
+std::vector<unsigned char> GetHeaderBytes(const CBlockHeader& blockHeader, size_t headerSize);
+
+uint256 GetHeaderHashFromBlockUint256(const CBlockHeader& blockHeader);
 
 #endif // BITCOIN_POW_H
