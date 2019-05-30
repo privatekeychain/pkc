@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(src)
 include_directories(src/bench)
+include_directories(src/bench/data)
 include_directories(src/compat)
 include_directories(src/config)
 include_directories(src/consensus)
@@ -40,6 +41,7 @@ include_directories(src/secp256k1/src/modules/recovery)
 include_directories(src/support)
 include_directories(src/support/allocators)
 include_directories(src/test)
+include_directories(src/test/data)
 include_directories(src/univalue)
 include_directories(src/univalue/include)
 include_directories(src/univalue/lib)
@@ -48,6 +50,7 @@ include_directories(src/wallet/test)
 include_directories(src/zmq)
 
 add_executable(pkc
+        src/bench/data/block413567.raw.h
         src/bench/base58.cpp
         src/bench/bech32.cpp
         src/bench/bench.cpp
@@ -501,6 +504,13 @@ add_executable(pkc
         src/support/events.h
         src/support/lockedpool.cpp
         src/support/lockedpool.h
+        src/test/data/base58_encode_decode.json.h
+        src/test/data/key_io_invalid.json.h
+        src/test/data/key_io_valid.json.h
+        src/test/data/script_tests.json.h
+        src/test/data/sighash.json.h
+        src/test/data/tx_invalid.json.h
+        src/test/data/tx_valid.json.h
         src/test/addrman_tests.cpp
         src/test/allocator_tests.cpp
         src/test/amount_tests.cpp
