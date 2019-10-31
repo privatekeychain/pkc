@@ -56,10 +56,14 @@ RUN set -ex; \
     ./configure --without-gui --without-miniupnpc; \
     make -j ${BUILD_JOBS}; \
     make install; \
-    make clean;
-    # cd /env; \
-    # rm -rf /env/pkc;
+    make clean; \
+    rm -rf /usr/local/bin/test_bitcoin; \
+    rm -rf /usr/local/bin/bench_bitcoin; \
+    rm -rf /usr/local/bin/bitcoin-tx; \
+    rm -rf /env/pkc/.git;
 
+# cd /env; \
+# rm -rf /env/pkc;
 # 源码保留,矿池源码链接
 # CMD bitcoind
 

@@ -210,7 +210,7 @@ public:
         assert(consensus.hashGenesisBlock == uint256S("0x884f6e34c0be9c236842cb54006a18b28d3490dfcc6ee18a0717c06fa5fd7919"));
         assert(genesis.hashMerkleRoot == uint256S("0x9fe0b536754a727c4851a12b3f2d7132c60daea5cd5c13997b71b5f904e431b5"));
 
-//        vSeeds.emplace_back("seed.pkc.ink");
+        vSeeds.emplace_back("seed.pkc.ink");
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 55); // P
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 5);  // 3  // MAINTAIN 3
